@@ -4,5 +4,8 @@ TODO List :
 - Lister les informations necessaire grace au digramme de classe.
 - Dispatcher les différentes fonctionnalités
 
+Fonctionnalités :
 
-- Allez boir des coups !!!! 8----D
+- API REST (voir tp fait dernièrement ou class java). 
+
+- Allez boire des coups !!!! 8----D
