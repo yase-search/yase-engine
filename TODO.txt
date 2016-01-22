@@ -6,6 +6,7 @@ TODO List :
 
 Fonctionnalités :
 
-- API REST (voir tp fait dernièrement ou class java). 
+- API REST (voir tp fait dernièrement ou class java).
+	- http://www.vogella.com/tutorials/REST/article.html 
 
 - Allez boire des coups !!!! 8----D
