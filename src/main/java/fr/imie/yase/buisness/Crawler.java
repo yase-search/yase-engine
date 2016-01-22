@@ -9,7 +9,10 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 public class Crawler {
 	
 	public Crawler() throws Exception{
-		String crawlStorageFolder = "/data/crawl/root";
+		String crawlStorageFolder = System.getProperty("os.name").toLowerCase().indexOf("windows") > -1 ?
+			"/Users/" + System.getProperty("user.name") + "/AppData/Roaming/crawler/tmp/root" :
+			"/tmp/crawler/root";
+
 	    int numberOfCrawlers = 7;
 
 	    CrawlConfig config = new CrawlConfig();
