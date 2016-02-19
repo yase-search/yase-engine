@@ -10,3 +10,36 @@ Fonctionnalités :
 	- http://www.vogella.com/tutorials/REST/article.html 
 
 - Allez boire des coups !!!! 8----D
+
+CONCEPTION :
+
+Déjà fait : 
+
+- Conception 1J
+- Conception technique 1.5J
+- Mise en place de l'environnement de DEV 0.5J
+
+RAF :
+
+Développement + test :
+	
+	Etape 1 :
+		
+		- Identifier les données nécessaires :
+			- Text
+			- Titre 
+			- Description ( si pas de meta : Descritpion non disponible ).
+		- Pattern POOL
+		- Pattern DAO / DTO
+			
+	Etape 2 :
+	
+		- Fonctionnalités Métiers ( crawler + search ).
+		
+	Etape 3 :
+	
+		- Interface ( HTML / Search )
+		
+	Etape 4 :
+		
+		- Test
