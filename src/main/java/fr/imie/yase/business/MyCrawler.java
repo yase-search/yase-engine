@@ -1,4 +1,4 @@
-package fr.imie.yase.buisness;
+package fr.imie.yase.business;
 
 
 

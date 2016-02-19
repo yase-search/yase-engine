@@ -1,6 +1,6 @@
 package fr.imie.yase;
 
-import fr.imie.yase.buisness.Crawler;
+import fr.imie.yase.business.Crawler;
 
 /**
  * Permet de lancer l'application.

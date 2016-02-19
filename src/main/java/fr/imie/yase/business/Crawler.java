@@ -1,4 +1,4 @@
-package fr.imie.yase.buisness;
+package fr.imie.yase.business;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
