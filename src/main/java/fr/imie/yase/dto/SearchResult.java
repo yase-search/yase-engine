@@ -12,6 +12,18 @@ public class SearchResult {
 	private String text;
 	
 	private String description;
+	
+	/**
+	 * Construct
+	 * @param title String
+	 * @param text String 
+	 * @param description String
+	 */
+	public SearchResult(String title, String text, String description) {
+		this.title = title;
+		this.text = text;
+		this.description = description;
+	}
 
 	/**
 	 * @return the title

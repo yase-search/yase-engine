@@ -10,6 +10,14 @@ public class Keywords {
 	private boolean pertinent;
 	
 	private Integer id;
+	
+	private String value;
+	
+	public Keywords(String value, boolean pertinent, Integer id) {
+		this.value = value;
+		this.pertinent = pertinent;
+		this.id = id;
+	}
 
 	/**
 	 * @return the pertinent
@@ -37,6 +45,20 @@ public class Keywords {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the value
+	 */
+	public String getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value the value to set
+	 */
+	public void setValue(String value) {
+		this.value = value;
 	}
 	
 }
