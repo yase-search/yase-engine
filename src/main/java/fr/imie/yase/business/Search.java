@@ -1,4 +1,4 @@
-package fr.imie.yase.buisness;
+package fr.imie.yase.business;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Search {
 	}
 	
 	/**
-	 * Renvoie les résultats de la recherche au client.
+	 * Renvoie les rï¿½sultats de la recherche au client.
 	 * @return String JSON
 	 */
 	private String renderView() {
