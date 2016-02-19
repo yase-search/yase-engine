@@ -1,19 +1,19 @@
 TODO List :
 
-- Base de donnÈe
+- Base de donn√©e
 - Lister les informations necessaire grace au digramme de classe.
-- Dispatcher les diffÈrentes fonctionnalitÈs
+- Dispatcher les diff√©rentes fonctionnalit√©s
 
-FonctionnalitÈs :
+Fonctionnalit√©s :
 
-- API REST (voir tp fait derniËrement ou class java).
+- API REST (voir tp fait derni√®rement ou class java).
 	- http://www.vogella.com/tutorials/REST/article.html 
 
 - Allez boire des coups !!!! 8----D
 
 CONCEPTION :
 
-DÈj‡ fait : 
+D√©j√† fait : 
 
 - Conception 1J
 - Conception technique 1.5J
@@ -21,11 +21,11 @@ DÈj‡ fait :
 
 RAF :
 
-DÈveloppement + test :
+D√©veloppement + test :
 	
 	Etape 1 :
 		
-		- Identifier les donnÈes nÈcessaires :
+		- Identifier les donn√©es n√©cessaires :
 			- Text
 			- Titre 
 			- Description ( si pas de meta : Descritpion non disponible ).
@@ -34,7 +34,7 @@ DÈveloppement + test :
 			
 	Etape 2 :
 	
-		- FonctionnalitÈs MÈtiers ( crawler + search ).
+		- Fonctionnalit√©s M√©tiers ( crawler + search ).
 		
 	Etape 3 :
 	
