@@ -1,28 +1,33 @@
 package fr.imie.yase.dto;
 
+import java.util.List;
+
 /**
  * DTO SearchResult
  * @author Erwan
  *
  */
-public class SearchResult {
+public class Page {
 	
 	private String title;
 	
-	private String text;
-	
+	private List<Keywords> keywords;
+		
 	private String description;
 	
+	private String url;
+		
 	/**
 	 * Construct
 	 * @param title String
 	 * @param text String 
 	 * @param description String
 	 */
-	public SearchResult(String title, String text, String description) {
+	public Page(String title, List<Keywords> keywords, String description, String url) {
 		this.title = title;
-		this.text = text;
+		this.keywords = keywords;
 		this.description = description;
+		this.url = url;
 	}
 
 	/**
@@ -42,15 +47,15 @@ public class SearchResult {
 	/**
 	 * @return the text
 	 */
-	public String getText() {
-		return text;
+	public List<Keywords> getKeywords() {
+		return keywords;
 	}
 
 	/**
 	 * @param text the text to set
 	 */
-	public void setText(String text) {
-		this.text = text;
+	public void setText(List<Keywords> keywords) {
+		this.keywords = keywords;
 	}
 
 	/**
@@ -65,6 +70,20 @@ public class SearchResult {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 }
