@@ -14,7 +14,7 @@ import fr.imie.yase.dto.Keywords;
 
 public class KeywordsDAO implements DAO<Keywords> {
 	
-	private static final String SELECT_TABLE = "SELECT * FROM words ";
+	private static final String SELECT_TABLE = "SELECT * FROM words where text = ? ;";
 	private static final String INSERT_TABLE = "INSERT INTO words (text) VALUES (?);";
 	private static final String DELETE_TABLE = "DELETE FROM words WHERE id = ? ;";
 	private static final String ATT_TEXT = "text";
@@ -73,8 +73,7 @@ public class KeywordsDAO implements DAO<Keywords> {
 	 */
 	public PreparedStatement preparedStatementOneWords(String keywords) throws SQLException {
 		Connection  connection = DBConnector.getInstance();
-		String sql = SELECT_TABLE + " where text = ?";
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TABLE);
 		preparedStatement.setString(1, (String) keywords);
 		return preparedStatement;
 	}
