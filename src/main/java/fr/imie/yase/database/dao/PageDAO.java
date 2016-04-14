@@ -36,10 +36,9 @@ public class PageDAO implements DAO<Page>{
 		}
 		
 		String req = String.join("",
-			"SELECT p.id, pc.description, pc.title, p.link from pages p ",
+			"SELECT p.id, p.description, p.title, p.link, p.content from pages p ",
 			"INNER JOIN pages_words pw ON pw.idpage = p.id ",
 			"INNER JOIN words w ON w.id = pw.idword ",
-			"LEFT JOIN pages_content pc ON pc.idpage = p.id ",
 			"WHERE w.text IN (",
 			preparedArgs.substring(0, preparedArgs.length() - 1),
 			");"
@@ -58,7 +57,8 @@ public class PageDAO implements DAO<Page>{
 				res.getString("title"),
 				null,
 				res.getString("description"),
-				res.getString("link")
+				res.getString("link"),
+				res.getString("content")
 			);
 			
 			ret.add(p);
