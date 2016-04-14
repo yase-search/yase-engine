@@ -10,7 +10,7 @@ public interface DAO<T> {
 	
 	public List<T> find(Map<String, Object> params) throws SQLException;
 	
-	public boolean delete(int id);
+	public boolean delete(int id) throws SQLException;
 	
 	public T update(T entity);
 	

@@ -16,6 +16,7 @@ public class KeywordsDAO implements DAO<Keywords> {
 	
 	private static final String SELECT_TABLE = "SELECT * FROM words ";
 	private static final String INSERT_TABLE = "INSERT INTO words (text) VALUES (?);";
+	private static final String DELETE_TABLE = "DELETE FROM words WHERE id = ? ;";
 	private static final String ATT_TEXT = "text";
 	private static final String ATT_ID = "id";
 
@@ -38,9 +39,12 @@ public class KeywordsDAO implements DAO<Keywords> {
 		return listKeywords;
 	}
 
-	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
+	@Override
+	public boolean delete(int id) throws SQLException {
+		Connection  connection = DBConnector.getInstance();
+		PreparedStatement preparedStatement =  connection.prepareStatement(DELETE_TABLE);
+		preparedStatement.setInt(1, id);
+		return preparedStatement.execute();
 	}
 
 	@Override
@@ -55,6 +59,7 @@ public class KeywordsDAO implements DAO<Keywords> {
 		PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TABLE, Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, entity.getValue());
 		preparedStatement.execute();
+		// On récupère l'id si l'insertion en base s'est bien passé.
 		ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 		if (generatedKeys.next()) {
 			entity.setId((int) generatedKeys.getLong(ATT_ID));
