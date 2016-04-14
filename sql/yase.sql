@@ -91,7 +91,7 @@ ALTER SEQUENCE errors_idpage_seq OWNED BY errors.idpage;
 
 CREATE TABLE pages_content (
     id bigint NOT NULL,
-    "idPage" bigint NOT NULL,
+    idpage bigint NOT NULL,
     content text NOT NULL,
     title character varying(100) NOT NULL,
     description character varying(255) NOT NULL,
