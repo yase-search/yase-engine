@@ -16,6 +16,8 @@ public class Page {
 	private String description;
 	
 	private String url;
+	
+	private Integer id;
 		
 	/**
 	 * Construct
@@ -23,7 +25,8 @@ public class Page {
 	 * @param text String 
 	 * @param description String
 	 */
-	public Page(String title, List<Keywords> keywords, String description, String url) {
+	public Page(Integer id, String title, List<Keywords> keywords, String description, String url) {
+		this.id = id;
 		this.title = title;
 		this.keywords = keywords;
 		this.description = description;
