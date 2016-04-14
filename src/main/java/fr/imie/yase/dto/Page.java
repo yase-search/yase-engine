@@ -8,16 +8,12 @@ import java.util.List;
  *
  */
 public class Page {
-	
 	private String title;
-	
 	private List<Keywords> keywords;
-		
 	private String description;
-	
 	private String url;
-	
 	private Integer id;
+	private String content;
 		
 	/**
 	 * Construct
@@ -25,12 +21,13 @@ public class Page {
 	 * @param text String 
 	 * @param description String
 	 */
-	public Page(Integer id, String title, List<Keywords> keywords, String description, String url) {
+	public Page(Integer id, String title, List<Keywords> keywords, String description, String url, String content) {
 		this.id = id;
 		this.title = title;
 		this.keywords = keywords;
 		this.description = description;
 		this.url = url;
+		this.content = content;
 	}
 
 	/**
