@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.1
+-- Dumped by pg_dump version 9.5.1
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
@@ -30,7 +34,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: errors; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: errors; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE errors (
@@ -86,46 +90,6 @@ ALTER SEQUENCE errors_idpage_seq OWNED BY errors.idpage;
 
 
 --
--- Name: pages_content; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE pages_content (
-    id bigint NOT NULL,
-    idpage bigint NOT NULL,
-    content text NOT NULL,
-    title character varying(100) NOT NULL,
-    description character varying(255) NOT NULL,
-    "crawlDate" timestamp with time zone NOT NULL,
-    size integer NOT NULL,
-    "loadTime" integer NOT NULL,
-    locale character varying(5) NOT NULL
-);
-
-
-ALTER TABLE pages_content OWNER TO postgres;
-
---
--- Name: page_content_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE page_content_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE page_content_id_seq OWNER TO postgres;
-
---
--- Name: page_content_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE page_content_id_seq OWNED BY pages_content.id;
-
-
---
 -- Name: page_content_idpage_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -140,22 +104,22 @@ CREATE SEQUENCE page_content_idpage_seq
 ALTER TABLE page_content_idpage_seq OWNER TO postgres;
 
 --
--- Name: page_content_idpage_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE page_content_idpage_seq OWNED BY pages_content."idPage";
-
-
---
--- Name: pages; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pages; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE pages (
     id bigint NOT NULL,
-    "idWebsite" bigint NOT NULL,
+    id_website bigint NOT NULL,
     link character varying(2000) NOT NULL,
     clicks bigint NOT NULL,
-    "pageRank" integer NOT NULL
+    page_rank integer NOT NULL,
+    content text NOT NULL,
+    title character varying(100) NOT NULL,
+    description character varying(255) NOT NULL,
+    crawl_date timestamp with time zone NOT NULL,
+    size integer NOT NULL,
+    load_time integer NOT NULL,
+    locale character varying(5) NOT NULL
 );
 
 
@@ -200,11 +164,11 @@ ALTER TABLE pages_idwebsite_seq OWNER TO postgres;
 -- Name: pages_idwebsite_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE pages_idwebsite_seq OWNED BY pages."idWebsite";
+ALTER SEQUENCE pages_idwebsite_seq OWNED BY pages.id_website;
 
 
 --
--- Name: pages_links; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pages_links; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE pages_links (
@@ -258,7 +222,7 @@ ALTER SEQUENCE pages_links_idrefferer_seq OWNED BY pages_links."idRefferer";
 
 
 --
--- Name: pages_words; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pages_words; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE pages_words (
@@ -313,7 +277,7 @@ ALTER SEQUENCE pages_words_idword_seq OWNED BY pages_words.idword;
 
 
 --
--- Name: websites; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: websites; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE websites (
@@ -347,7 +311,7 @@ ALTER SEQUENCE websites_id_seq OWNED BY websites.id;
 
 
 --
--- Name: words; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: words; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE words (
@@ -401,24 +365,10 @@ ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regcl
 
 
 --
--- Name: idWebsite; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_website; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY pages ALTER COLUMN "idWebsite" SET DEFAULT nextval('pages_idwebsite_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pages_content ALTER COLUMN id SET DEFAULT nextval('page_content_id_seq'::regclass);
-
-
---
--- Name: idPage; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pages_content ALTER COLUMN "idPage" SET DEFAULT nextval('page_content_idpage_seq'::regclass);
+ALTER TABLE ONLY pages ALTER COLUMN id_website SET DEFAULT nextval('pages_idwebsite_seq'::regclass);
 
 
 --
@@ -486,13 +436,6 @@ SELECT pg_catalog.setval('errors_idpage_seq', 1, false);
 
 
 --
--- Name: page_content_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('page_content_id_seq', 1, false);
-
-
---
 -- Name: page_content_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -503,15 +446,7 @@ SELECT pg_catalog.setval('page_content_idpage_seq', 1, false);
 -- Data for Name: pages; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY pages (id, "idWebsite", link, clicks, "pageRank") FROM stdin;
-\.
-
-
---
--- Data for Name: pages_content; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY pages_content (id, "idPage", content, title, description, "crawlDate", size, "loadTime", locale) FROM stdin;
+COPY pages (id, id_website, link, clicks, page_rank, content, title, description, crawl_date, size, load_time, locale) FROM stdin;
 \.
 
 
@@ -604,7 +539,7 @@ SELECT pg_catalog.setval('words_id_seq', 1, false);
 
 
 --
--- Name: errors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: errors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY errors
@@ -612,15 +547,7 @@ ALTER TABLE ONLY errors
 
 
 --
--- Name: page_content_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY pages_content
-    ADD CONSTRAINT page_content_pkey PRIMARY KEY (id);
-
-
---
--- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY pages
@@ -628,7 +555,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: unique_url; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: unique_url; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY websites
@@ -636,7 +563,7 @@ ALTER TABLE ONLY websites
 
 
 --
--- Name: websites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: websites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY websites
@@ -644,7 +571,7 @@ ALTER TABLE ONLY websites
 
 
 --
--- Name: words_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: words_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY words
@@ -657,14 +584,6 @@ ALTER TABLE ONLY words
 
 ALTER TABLE ONLY pages_links
     ADD CONSTRAINT fk_iddestination FOREIGN KEY ("idDestination") REFERENCES pages(id);
-
-
---
--- Name: fk_idpage; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pages_content
-    ADD CONSTRAINT fk_idpage FOREIGN KEY ("idPage") REFERENCES pages(id);
 
 
 --
@@ -696,7 +615,7 @@ ALTER TABLE ONLY pages_links
 --
 
 ALTER TABLE ONLY pages
-    ADD CONSTRAINT fk_idwebsite FOREIGN KEY ("idWebsite") REFERENCES websites(id);
+    ADD CONSTRAINT fk_idwebsite FOREIGN KEY (id_website) REFERENCES websites(id);
 
 
 --
