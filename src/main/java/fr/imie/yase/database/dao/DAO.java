@@ -14,5 +14,5 @@ public interface DAO<T> {
 	
 	public T update(T entity);
 	
-	public T create(T entity);
+	public T create(T entity) throws SQLException;
 }
