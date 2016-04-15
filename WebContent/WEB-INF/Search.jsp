@@ -20,17 +20,16 @@
 			<div class="logo">
 				<span>Y</span><span>A</span><span>S</span><span>E</span>
 			</div>
-			<div class="search-input-wrapper">
-				<input type="text" name="search" value="Search">
-				<div id="search-button-wrapper">
-					<a class="btn" href="#" id="search-button"><i
-						class="fa fa-search"></i></a>
-				</div>
+			<form method="get" action="<c:url value="/yolo" />" class="search-input-wrapper" id="search-form">
+			<input type="text" name="search" placeholder="Search..." value="<c:out value="${search.input}" />">
+			<div id="search-button-wrapper">
+				<a class="btn" href="#" onclick="document.getElementById('search-form').submit();" id="search-button"><i class="fa fa-search"></i></a>
 			</div>
+		</form>
 		</div>
 	</div>
 	<div class="wrapper search-wrapper">
-		<c:forEach var="page" items="${results}">
+		<c:forEach var="page" items="${search.pages}">
 			<div class="result">
 				<a href="<c:out value="${page.value.url}" />" class="title"><c:out
 						value="${page.value.title}" /></a>
