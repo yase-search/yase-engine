@@ -28,7 +28,7 @@ public class WebSiteDAO implements DAO<Keywords> {
 	public List<Keywords> find(Map<String, Object> params) throws SQLException {
 		List<Keywords> listKeywords = new ArrayList<Keywords>();
 		for (Object url : (List<Object>) params.get("url")) {
-			PreparedStatement preparedStatement = preparedStatementOneWords((String) url);
+			PreparedStatement preparedStatement = preparedStatementFind((String) url);
 			ResultSet result = preparedStatement.executeQuery();
 			// Si la requete est différents de null, on ajoute le Keywords à la liste.
 			if (!result.wasNull()) {
@@ -70,7 +70,7 @@ public class WebSiteDAO implements DAO<Keywords> {
 	 * @return PreparedStatement PreparedStatement
 	 * @throws SQLException SQLException
 	 */
-	public PreparedStatement preparedStatementOneWords(String url) throws SQLException {
+	public PreparedStatement preparedStatementFind(String url) throws SQLException {
 		Connection  connection = DBConnector.getInstance();
 		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TABLE);
 		preparedStatement.setString(1, (String) url);
