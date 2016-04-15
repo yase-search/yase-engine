@@ -2,13 +2,25 @@ package fr.imie.yase.business;
 
 
 
-import java.util.Set;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import fr.imie.yase.database.dao.DAO;
+import fr.imie.yase.database.dao.PageDAO;
+import fr.imie.yase.database.dao.WebSiteDAO;
+import fr.imie.yase.dto.WebSite;
 
 public class MyCrawler extends WebCrawler {
 
@@ -42,14 +54,79 @@ public class MyCrawler extends WebCrawler {
          System.out.println("URL: " + url);
 
          if (page.getParseData() instanceof HtmlParseData) {
-             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-             String text = htmlParseData.getText();
-             String html = htmlParseData.getHtml();
-             Set<WebURL> links = htmlParseData.getOutgoingUrls();
-
-             System.out.println("Text length: " + text.length());
-             System.out.println("Html length: " + html.length());
-             System.out.println("Number of outgoing links: " + links.size());
+        	 WebSite website;
+			try {
+				website = createWebSite(page);
+				createPage(page, website);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
          }
+    }
+     
+//    public void insertPage()
+     
+    /**
+     * Permet d'ajouter une page crawler en base de données.
+     * @param htmlParseData HtmlParseData
+     * @throws Exception 
+     */
+    public fr.imie.yase.dto.Page createPage(Page page, WebSite website) throws Exception {
+         HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
+	     String html = htmlParseData.getHtml();
+	     String description = htmlParseData.getMetaTags().get("description");
+    	 fr.imie.yase.dto.Page entity = new fr.imie.yase.dto.Page();
+    	 entity.setTitle(htmlParseData.getTitle());
+    	 entity.setContent(html);
+    	 entity.setCrawl_date(getDate());
+    	 entity.setDescription(description);
+    	 entity.setLoad_time(1);
+    	 entity.setLocale(page.getLanguage());
+    	 entity.setSize(html.length());
+    	 entity.setUrl(page.getWebURL().getURL());
+    	 entity.setWebsite(website);
+    	 
+    	 PageDAO daoPage = new PageDAO();
+    	 // On vérifie si la page existe déjà en base
+    	 fr.imie.yase.dto.Page result = daoPage.findByURL(entity);
+    	 if (result.getId() == null) {
+    		 result = daoPage.create(entity);
+    	 }
+    	 return entity;
+    }
+    
+    /**
+     * Permet de générer une entity WebSite
+     * @param page Page
+     * @return website WebSite
+     * @throws SQLException 
+     */
+    public WebSite createWebSite(Page page) throws SQLException {
+    	String domain = page.getWebURL().getDomain();
+    	WebSite website = new WebSite(null, domain);
+    	WebSiteDAO daoWebSite = new WebSiteDAO();
+    	Map<String, Object> mapWebSite = new HashMap<String, Object>();
+    	List<WebSite> listWebSite = new ArrayList<WebSite>();
+    	listWebSite.add(website);
+        mapWebSite.put("website", listWebSite);
+   	 	List<WebSite> results = daoWebSite.find(mapWebSite);
+   	 	WebSite websiteEntity = new WebSite(null, domain);
+   	 	if (results.size() > 0) {
+   	 		websiteEntity = results.get(0);
+   	 	} else {
+   	 		websiteEntity = daoWebSite.create(website);
+   	 	}
+    	return websiteEntity;
+    }
+    
+    public String getDate() {
+    	TimeZone tz = TimeZone.getTimeZone("UTC");
+    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
+    	df.setTimeZone(tz);
+    	return df.format(new Date());
     }
 }

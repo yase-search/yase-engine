@@ -5,6 +5,11 @@ public class WebSite {
 	private Integer id;
 	private String domain;
 	
+	public WebSite(Integer id, String url) {
+		this.id = id;
+		this.domain = url;
+	}
+	
 	/**
 	 * @return the id
 	 */

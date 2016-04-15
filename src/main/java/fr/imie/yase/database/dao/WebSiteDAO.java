@@ -10,33 +10,33 @@ import java.util.List;
 import java.util.Map;
 
 import fr.imie.yase.database.DBConnector;
-import fr.imie.yase.dto.Keywords;
+import fr.imie.yase.dto.WebSite;
 
-public class WebSiteDAO implements DAO<Keywords> {
+public class WebSiteDAO implements DAO<WebSite> {
 	
 	private static final String SELECT_TABLE = "SELECT * FROM websites where url = ? ;";
 	private static final String INSERT_TABLE = "INSERT INTO websites (url) VALUES (?);";
 	private static final String DELETE_TABLE = "DELETE FROM websites WHERE id = ? ;";
-	private static final String ATT_TEXT = "url";
+	private static final String ATT_TEXT = "domain";
 	private static final String ATT_ID = "id";
 
-	public Keywords get(int id) {
+	public WebSite get(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<Keywords> find(Map<String, Object> params) throws SQLException {
-		List<Keywords> listKeywords = new ArrayList<Keywords>();
-		for (Object url : (List<Object>) params.get("url")) {
+	public List<WebSite> find(Map<String, Object> params) throws SQLException {
+		List<WebSite> listWebSite = new ArrayList<WebSite>();
+		for (Object url : (List<Object>) params.get("website")) {
 			PreparedStatement preparedStatement = preparedStatementFind((String) url);
 			ResultSet result = preparedStatement.executeQuery();
 			// Si la requete est différents de null, on ajoute le Keywords à la liste.
 			if (!result.wasNull()) {
-				Keywords objectKeywords = new Keywords(result.getString(ATT_TEXT), true, result.getInt(ATT_ID));
-				listKeywords.add(objectKeywords);
+				WebSite objectWebSite = new WebSite(result.getInt(ATT_ID), result.getString(ATT_TEXT));
+				listWebSite.add(objectWebSite);
 			}
 		}
-		return listKeywords;
+		return listWebSite;
 	}
 
 	public boolean delete(int id) throws SQLException {
@@ -46,15 +46,10 @@ public class WebSiteDAO implements DAO<Keywords> {
 		return preparedStatement.execute();
 	}
 
-	public Keywords update(Keywords entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Keywords create(Keywords entity) throws SQLException {
+	public WebSite create(WebSite entity) throws SQLException {
 		Connection  connection = DBConnector.getInstance();
 		PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TABLE, Statement.RETURN_GENERATED_KEYS);
-		preparedStatement.setString(1, entity.getValue());
+		preparedStatement.setString(1, entity.getDomain());
 		preparedStatement.execute();
 		// On récupère l'id si l'insertion en base s'est bien passé.
 		ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
@@ -75,6 +70,12 @@ public class WebSiteDAO implements DAO<Keywords> {
 		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TABLE);
 		preparedStatement.setString(1, (String) url);
 		return preparedStatement;
+	}
+
+	@Override
+	public WebSite update(WebSite entity) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
