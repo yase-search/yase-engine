@@ -15,33 +15,11 @@ public class Page {
 	private String url;
 	private Integer id;
 	private String content;
-	private Date crawl_date;
+	private String crawl_date;
 	private Integer size;
 	private Integer load_time;
 	private String locale;
 	private WebSite website;
-
-	/**
-	 * Construct
-	 * @param title String
-	 * @param text String 
-	 * @param description String
-	 */
-	public Page(Integer id, String title, List<Keywords> keywords,
-			String description, String url, String content,
-			Date crawl_date, Integer size, Integer load_time,
-			String locale) {
-		this.id = id;
-		this.title = title;
-		this.keywords = keywords;
-		this.description = description;
-		this.url = url;
-		this.content = content;
-		this.crawl_date = crawl_date;
-		this.size = size;
-		this.load_time = load_time;
-		this.locale = locale;
-	}
 
 	/**
 	 * @return the title
@@ -124,14 +102,14 @@ public class Page {
 	/**
 	 * @return the crawl_date
 	 */
-	public Date getCrawl_date() {
+	public String getCrawl_date() {
 		return crawl_date;
 	}
 
 	/**
 	 * @param crawl_date the crawl_date to set
 	 */
-	public void setCrawl_date(Date crawl_date) {
+	public void setCrawl_date(String crawl_date) {
 		this.crawl_date = crawl_date;
 	}
 
