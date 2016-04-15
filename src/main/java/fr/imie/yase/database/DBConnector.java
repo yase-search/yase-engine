@@ -11,12 +11,11 @@ import java.sql.SQLException;
  * Classe qui gère les connections à la base de données
  */
 public class DBConnector {
+	private static final String URL = "jdbc:postgresql://" + System.getenv("PG_URL") + ":" + System.getenv("PG_PORT") + "/" + System.getenv("PG_DB");
 	
-	private static final String URL = "jdbc:postgresql://localhost:5432/yase";
+	private static final String LOGIN = System.getenv("PG_USER");
 	
-	private static final String LOGIN = "postgres";
-	
-	private static final String PASSWORD = "postgres";
+	private static final String PASSWORD = System.getenv("PG_PASSWORD");
 
 	private static Connection _instance;
 	
