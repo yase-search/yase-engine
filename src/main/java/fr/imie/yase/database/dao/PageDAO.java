@@ -81,4 +81,21 @@ public class PageDAO implements DAO<Page>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Page findByURL(Page page) throws Exception{
+		Connection con = DBConnector.getInstance();
+		String sql = "SELECT * FROM pages WHERE url = ?";
+		
+		PreparedStatement statement = con.prepareStatement(sql);
+		statement.setString(1,  page.getUrl());
+		ResultSet res = statement.executeQuery();
+		
+		if(res.next()){
+			page.setId(res.getInt("id"));
+		} else{
+			// TODO
+			throw new Exception("No results");
+		}
+		return page;
+	}
 }
