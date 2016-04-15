@@ -3,7 +3,7 @@ package fr.imie.yase.dto;
 public class WebSite {
 
 	private Integer id;
-	private String url;
+	private String domain;
 	
 	/**
 	 * @return the id
@@ -20,13 +20,13 @@ public class WebSite {
 	/**
 	 * @return the url
 	 */
-	public String getUrl() {
-		return url;
+	public String getDomain() {
+		return domain;
 	}
 	/**
 	 * @param url the url to set
 	 */
-	public void setUrl(String url) {
-		this.url = url;
+	public void setDomain(String domain) {
+		this.domain = domain;
 	}
 }

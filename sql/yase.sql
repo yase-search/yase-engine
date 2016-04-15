@@ -256,7 +256,7 @@ ALTER SEQUENCE pages_words_idword_seq OWNED BY pages_words.idword;
 
 CREATE TABLE websites (
     id bigint NOT NULL,
-    url character varying(255) NOT NULL,
+    domain character varying(255) NOT NULL,
     "siteRank" integer NOT NULL
 );
 
@@ -478,7 +478,7 @@ SELECT pg_catalog.setval('pages_words_idword_seq', 1, false);
 -- Data for Name: websites; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY websites (id, url, "siteRank") FROM stdin;
+COPY websites (id, domain, "siteRank") FROM stdin;
 \.
 
 
@@ -521,11 +521,11 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: unique_url; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: unique_domain; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY websites
-    ADD CONSTRAINT unique_url UNIQUE (url);
+    ADD CONSTRAINT unique_domain UNIQUE (domain);
 
 
 --
