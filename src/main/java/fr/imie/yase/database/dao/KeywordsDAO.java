@@ -39,7 +39,6 @@ public class KeywordsDAO implements DAO<Keywords> {
 		return listKeywords;
 	}
 
-	@Override
 	public boolean delete(int id) throws SQLException {
 		Connection  connection = DBConnector.getInstance();
 		PreparedStatement preparedStatement =  connection.prepareStatement(DELETE_TABLE);
