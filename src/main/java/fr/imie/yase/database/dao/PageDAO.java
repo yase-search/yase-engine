@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,13 @@ import fr.imie.yase.dto.Keywords;
 import fr.imie.yase.dto.Page;
 
 public class PageDAO implements DAO<Page>{
+	
+	private static String INSERT_TABLE = String.join("",
+		"INSERT INTO pages",
+		"(id_website, link, content, title, description, crawl_date, size, load_time, locale)",
+		"values (?,?,?,?,?,?,?,?,?)"
+	);
+	private static final String ATT_ID = "id";
 
 	public Page get(int id) {
 		// TODO Auto-generated method stub
@@ -53,13 +61,13 @@ public class PageDAO implements DAO<Page>{
 		ResultSet res = statement.executeQuery();
 		
 		while(res.next()){
-			Page p = new Page(res.getInt("id"),
-				res.getString("title"),
-				null,
-				res.getString("description"),
-				res.getString("link"),
-				res.getString("content")
-			);
+			System.out.println(res.getString("url"));
+			Page p = new Page();
+			p.setId(res.getInt("id"));
+			p.setTitle(res.getString("title"));
+			p.setDescription(res.getString("description"));
+			p.setContent(res.getString("content"));
+			p.setUrl(res.getString("link"));
 			
 			ret.add(p);
 		}
@@ -77,9 +85,28 @@ public class PageDAO implements DAO<Page>{
 		return null;
 	}
 
-	public Page create(Page entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page create(Page entity) throws SQLException {
+		Connection con = DBConnector.getInstance();
+		
+		PreparedStatement statement = con.prepareStatement(INSERT_TABLE, Statement.RETURN_GENERATED_KEYS);
+		statement.setInt(1, entity.getWebsite().getId());
+		statement.setString(2, entity.getUrl());
+		statement.setString(3, entity.getContent());
+		statement.setString(4, entity.getTitle());
+		statement.setString(5, entity.getDescription());
+		statement.setString(6, entity.getCrawl_date());
+		statement.setInt(7, entity.getSize());
+		statement.setInt(8, entity.getLoad_time());
+		statement.setString(9,  entity.getLocale());
+		
+		statement.execute();
+		
+		ResultSet generatedKeys = statement.getGeneratedKeys();
+		if (generatedKeys.next()) {
+			entity.setId((int) generatedKeys.getLong(ATT_ID));
+		}
+		
+		return entity;
 	}
 	
 	public Page findByURL(Page page) throws Exception{

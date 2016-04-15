@@ -1,6 +1,5 @@
 package fr.imie.yase.dto;
 
-import java.sql.Date;
 import java.util.List;
 
 /**
