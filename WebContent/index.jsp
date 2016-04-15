@@ -16,12 +16,12 @@
 		<span>Y</span><span>A</span><span>S</span><span>E</span>
 		</div>
 		<div class="sublogo">Yet another search engine</div>
-		<div class="search-input-wrapper">
+		<form method="get" action="<c:url value="/yolo" />" class="search-input-wrapper" id="search-form">
 			<input type="text" name="search" placeholder="Search...">
 			<div id="search-button-wrapper">
-				<a class="btn" href="/search.html" id="search-button"><i class="fa fa-search"></i></a>
+				<a class="btn" href="#" onclick="document.getElementById('search-form').submit();" id="search-button"><i class="fa fa-search"></i></a>
 			</div>
-		</div>
+		</form>
 	</div>
 </body>
 </html>
