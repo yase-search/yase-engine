@@ -61,9 +61,6 @@ public class MyCrawler extends WebCrawler {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
          }
     }
@@ -73,17 +70,17 @@ public class MyCrawler extends WebCrawler {
     /**
      * Permet d'ajouter une page crawler en base de données.
      * @param htmlParseData HtmlParseData
+     * @throws SQLException 
      * @throws Exception 
      */
-    public fr.imie.yase.dto.Page createPage(Page page, WebSite website) throws Exception {
+    public fr.imie.yase.dto.Page createPage(Page page, WebSite website) throws SQLException {
          HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
 	     String html = htmlParseData.getHtml();
-	     String description = htmlParseData.getMetaTags().get("description");
     	 fr.imie.yase.dto.Page entity = new fr.imie.yase.dto.Page();
     	 entity.setTitle(htmlParseData.getTitle());
     	 entity.setContent(html);
     	 entity.setCrawl_date(getDate());
-    	 entity.setDescription(description);
+    	 entity.setDescription(getDescription(htmlParseData));
     	 entity.setLoad_time(1);
     	 entity.setLocale(page.getLanguage());
     	 entity.setSize(html.length());
@@ -128,5 +125,22 @@ public class MyCrawler extends WebCrawler {
     	DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
     	df.setTimeZone(tz);
     	return df.format(new Date());
+    }
+    
+    /**
+     * Permet de récupérer la description d'un site
+     * @param htmlParseData
+     * @return description String
+     */
+    public String getDescription(HtmlParseData htmlParseData) {
+    	String description = "";
+    	String data = htmlParseData.getMetaTags().get("description");
+    	if (data != null) {
+    		description = data;
+    		if (data.length() > 255) {
+    			description = data.substring(0, 250) + "...";
+    		}
+    	}
+    	return description;
     }
 }
