@@ -102,7 +102,7 @@ CREATE SEQUENCE page_content_idpage_seq
 CREATE TABLE pages (
     id bigint NOT NULL,
     id_website bigint NOT NULL,
-    link character varying(2000) NOT NULL,
+    url character varying(2000) NOT NULL,
     clicks bigint DEFAULT 0 NOT NULL,
     page_rank integer DEFAULT 0 NOT NULL,
     content text NOT NULL,
