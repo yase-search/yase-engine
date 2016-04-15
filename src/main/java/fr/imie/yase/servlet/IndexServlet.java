@@ -32,6 +32,7 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
+			System.out.println(request.getParameter("search"));
 			Search search = new Search(request.getParameter("search"));
 			request.setAttribute("search", search);
 		} catch (SQLException e) {

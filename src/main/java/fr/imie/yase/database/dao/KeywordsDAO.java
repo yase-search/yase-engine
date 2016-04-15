@@ -30,12 +30,10 @@ public class KeywordsDAO implements DAO<Keywords> {
 		for (Object keywords : (List<Object>)params.get("keywords")) {
 			PreparedStatement preparedStatement = preparedStatementOneWords((String) keywords);
 			ResultSet result = preparedStatement.executeQuery();
+			System.out.println(result.toString());
 			// Si la requete est diff�rents de null, on ajoute le Keywords � la liste.
 			if (!result.wasNull()) {
 				while (result.next()) {              
-//				    System.out.println(resultset.getString("Col 1"));
-//				    System.out.println(resultset.getString("Col 2"));
-//				    System.out.println(resultset.getString("Col n"));
 				    Keywords objectKeywords = new Keywords(result.getString(ATT_TEXT), true, result.getInt(ATT_ID));
 				    listKeywords.add(objectKeywords);
 				}
