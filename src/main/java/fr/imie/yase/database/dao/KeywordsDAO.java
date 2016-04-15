@@ -27,13 +27,18 @@ public class KeywordsDAO implements DAO<Keywords> {
 
 	public List<Keywords> find(Map<String, Object> params) throws SQLException {
 		List<Keywords> listKeywords = new ArrayList<Keywords>();
-		for (Object keywords : params.entrySet()) {
+		for (Object keywords : (List<Object>)params.get("keywords")) {
 			PreparedStatement preparedStatement = preparedStatementOneWords((String) keywords);
 			ResultSet result = preparedStatement.executeQuery();
-			// Si la requete est différents de null, on ajoute le Keywords à la liste.
+			// Si la requete est diffï¿½rents de null, on ajoute le Keywords ï¿½ la liste.
 			if (!result.wasNull()) {
-				Keywords objectKeywords = new Keywords(result.getString(ATT_TEXT), true, result.getInt(ATT_ID));
-				listKeywords.add(objectKeywords);
+				while (result.next()) {              
+//				    System.out.println(resultset.getString("Col 1"));
+//				    System.out.println(resultset.getString("Col 2"));
+//				    System.out.println(resultset.getString("Col n"));
+				    Keywords objectKeywords = new Keywords(result.getString(ATT_TEXT), true, result.getInt(ATT_ID));
+				    listKeywords.add(objectKeywords);
+				}
 			}
 		}
 		return listKeywords;
@@ -56,7 +61,7 @@ public class KeywordsDAO implements DAO<Keywords> {
 		PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TABLE, Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, entity.getValue());
 		preparedStatement.execute();
-		// On récupère l'id si l'insertion en base s'est bien passé.
+		// On rï¿½cupï¿½re l'id si l'insertion en base s'est bien passï¿½.
 		ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 		if (generatedKeys.next()) {
 			entity.setId((int) generatedKeys.getLong(ATT_ID));
@@ -65,7 +70,7 @@ public class KeywordsDAO implements DAO<Keywords> {
 	}
 	
 	/** 
-	 * Permet de préparer l'objet preparedStatement pour une requete find
+	 * Permet de prï¿½parer l'objet preparedStatement pour une requete find
 	 * @param keywords String
 	 * @return PreparedStatement PreparedStatement
 	 * @throws SQLException SQLException
