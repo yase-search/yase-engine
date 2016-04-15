@@ -102,7 +102,7 @@ CREATE SEQUENCE page_content_idpage_seq
 CREATE TABLE pages (
     id bigint NOT NULL,
     id_website bigint NOT NULL,
-    link character varying(2000) NOT NULL,
+    url character varying(2000) NOT NULL,
     clicks bigint DEFAULT 0 NOT NULL,
     page_rank integer DEFAULT 0 NOT NULL,
     content text NOT NULL,
@@ -257,7 +257,7 @@ ALTER SEQUENCE pages_words_idword_seq OWNED BY pages_words.idword;
 CREATE TABLE websites (
     id bigint NOT NULL,
     domain character varying(255) NOT NULL,
-    "siteRank" integer NOT NULL
+    "site_rank" integer NOT NULL
 );
 
 
@@ -478,7 +478,7 @@ SELECT pg_catalog.setval('pages_words_idword_seq', 1, false);
 -- Data for Name: websites; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY websites (id, domain, "siteRank") FROM stdin;
+COPY websites (id, domain, "site_rank") FROM stdin;
 \.
 
 
