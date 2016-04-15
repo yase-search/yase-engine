@@ -17,7 +17,7 @@ public class WebSiteDAO implements DAO<Keywords> {
 	private static final String SELECT_TABLE = "SELECT * FROM websites where url = ? ;";
 	private static final String INSERT_TABLE = "INSERT INTO websites (url) VALUES (?);";
 	private static final String DELETE_TABLE = "DELETE FROM websites WHERE id = ? ;";
-	private static final String ATT_TEXT = "text";
+	private static final String ATT_TEXT = "url";
 	private static final String ATT_ID = "id";
 
 	public Keywords get(int id) {
