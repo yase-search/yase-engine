@@ -14,14 +14,14 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -34,7 +34,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: errors; Type: TABLE; Schema: public; Owner: postgres
+-- Name: errors; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE errors (
@@ -45,10 +45,8 @@ CREATE TABLE errors (
 );
 
 
-ALTER TABLE errors OWNER TO postgres;
-
 --
--- Name: errors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: errors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE errors_id_seq
@@ -59,17 +57,15 @@ CREATE SEQUENCE errors_id_seq
     CACHE 1;
 
 
-ALTER TABLE errors_id_seq OWNER TO postgres;
-
 --
--- Name: errors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: errors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE errors_id_seq OWNED BY errors.id;
 
 
 --
--- Name: errors_idpage_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: errors_idpage_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE errors_idpage_seq
@@ -80,17 +76,15 @@ CREATE SEQUENCE errors_idpage_seq
     CACHE 1;
 
 
-ALTER TABLE errors_idpage_seq OWNER TO postgres;
-
 --
--- Name: errors_idpage_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: errors_idpage_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE errors_idpage_seq OWNED BY errors.idpage;
 
 
 --
--- Name: page_content_idpage_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: page_content_idpage_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE page_content_idpage_seq
@@ -101,10 +95,8 @@ CREATE SEQUENCE page_content_idpage_seq
     CACHE 1;
 
 
-ALTER TABLE page_content_idpage_seq OWNER TO postgres;
-
 --
--- Name: pages; Type: TABLE; Schema: public; Owner: postgres
+-- Name: pages; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE pages (
@@ -123,10 +115,8 @@ CREATE TABLE pages (
 );
 
 
-ALTER TABLE pages OWNER TO postgres;
-
 --
--- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE pages_id_seq
@@ -137,17 +127,15 @@ CREATE SEQUENCE pages_id_seq
     CACHE 1;
 
 
-ALTER TABLE pages_id_seq OWNER TO postgres;
-
 --
--- Name: pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE pages_id_seq OWNED BY pages.id;
 
 
 --
--- Name: pages_idwebsite_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: pages_idwebsite_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE pages_idwebsite_seq
@@ -158,17 +146,15 @@ CREATE SEQUENCE pages_idwebsite_seq
     CACHE 1;
 
 
-ALTER TABLE pages_idwebsite_seq OWNER TO postgres;
-
 --
--- Name: pages_idwebsite_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: pages_idwebsite_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE pages_idwebsite_seq OWNED BY pages.id_website;
 
 
 --
--- Name: pages_links; Type: TABLE; Schema: public; Owner: postgres
+-- Name: pages_links; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE pages_links (
@@ -177,10 +163,8 @@ CREATE TABLE pages_links (
 );
 
 
-ALTER TABLE pages_links OWNER TO postgres;
-
 --
--- Name: pages_links_iddestination_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: pages_links_iddestination_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE pages_links_iddestination_seq
@@ -191,17 +175,15 @@ CREATE SEQUENCE pages_links_iddestination_seq
     CACHE 1;
 
 
-ALTER TABLE pages_links_iddestination_seq OWNER TO postgres;
-
 --
--- Name: pages_links_iddestination_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: pages_links_iddestination_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE pages_links_iddestination_seq OWNED BY pages_links."idDestination";
 
 
 --
--- Name: pages_links_idrefferer_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: pages_links_idrefferer_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE pages_links_idrefferer_seq
@@ -212,17 +194,15 @@ CREATE SEQUENCE pages_links_idrefferer_seq
     CACHE 1;
 
 
-ALTER TABLE pages_links_idrefferer_seq OWNER TO postgres;
-
 --
--- Name: pages_links_idrefferer_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: pages_links_idrefferer_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE pages_links_idrefferer_seq OWNED BY pages_links."idRefferer";
 
 
 --
--- Name: pages_words; Type: TABLE; Schema: public; Owner: postgres
+-- Name: pages_words; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE pages_words (
@@ -232,10 +212,8 @@ CREATE TABLE pages_words (
 );
 
 
-ALTER TABLE pages_words OWNER TO postgres;
-
 --
--- Name: pages_words_idpage_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: pages_words_idpage_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE pages_words_idpage_seq
@@ -246,17 +224,15 @@ CREATE SEQUENCE pages_words_idpage_seq
     CACHE 1;
 
 
-ALTER TABLE pages_words_idpage_seq OWNER TO postgres;
-
 --
--- Name: pages_words_idpage_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: pages_words_idpage_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE pages_words_idpage_seq OWNED BY pages_words.idpage;
 
 
 --
--- Name: pages_words_idword_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: pages_words_idword_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE pages_words_idword_seq
@@ -267,17 +243,15 @@ CREATE SEQUENCE pages_words_idword_seq
     CACHE 1;
 
 
-ALTER TABLE pages_words_idword_seq OWNER TO postgres;
-
 --
--- Name: pages_words_idword_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: pages_words_idword_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE pages_words_idword_seq OWNED BY pages_words.idword;
 
 
 --
--- Name: websites; Type: TABLE; Schema: public; Owner: postgres
+-- Name: websites; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE websites (
@@ -287,10 +261,8 @@ CREATE TABLE websites (
 );
 
 
-ALTER TABLE websites OWNER TO postgres;
-
 --
--- Name: websites_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: websites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE websites_id_seq
@@ -301,17 +273,15 @@ CREATE SEQUENCE websites_id_seq
     CACHE 1;
 
 
-ALTER TABLE websites_id_seq OWNER TO postgres;
-
 --
--- Name: websites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: websites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE websites_id_seq OWNED BY websites.id;
 
 
 --
--- Name: words; Type: TABLE; Schema: public; Owner: postgres
+-- Name: words; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE words (
@@ -320,10 +290,8 @@ CREATE TABLE words (
 );
 
 
-ALTER TABLE words OWNER TO postgres;
-
 --
--- Name: words_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: words_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE words_id_seq
@@ -334,87 +302,85 @@ CREATE SEQUENCE words_id_seq
     CACHE 1;
 
 
-ALTER TABLE words_id_seq OWNER TO postgres;
-
 --
--- Name: words_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: words_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE words_id_seq OWNED BY words.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY errors ALTER COLUMN id SET DEFAULT nextval('errors_id_seq'::regclass);
 
 
 --
--- Name: idpage; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: idpage; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY errors ALTER COLUMN idpage SET DEFAULT nextval('errors_idpage_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
 
 
 --
--- Name: id_website; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id_website; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages ALTER COLUMN id_website SET DEFAULT nextval('pages_idwebsite_seq'::regclass);
 
 
 --
--- Name: idRefferer; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: idRefferer; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages_links ALTER COLUMN "idRefferer" SET DEFAULT nextval('pages_links_idrefferer_seq'::regclass);
 
 
 --
--- Name: idDestination; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: idDestination; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages_links ALTER COLUMN "idDestination" SET DEFAULT nextval('pages_links_iddestination_seq'::regclass);
 
 
 --
--- Name: idpage; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: idpage; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages_words ALTER COLUMN idpage SET DEFAULT nextval('pages_words_idpage_seq'::regclass);
 
 
 --
--- Name: idword; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: idword; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages_words ALTER COLUMN idword SET DEFAULT nextval('pages_words_idword_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY websites ALTER COLUMN id SET DEFAULT nextval('websites_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY words ALTER COLUMN id SET DEFAULT nextval('words_id_seq'::regclass);
 
 
 --
--- Data for Name: errors; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: errors; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY errors (id, idpage, errorcode, date) FROM stdin;
@@ -422,28 +388,28 @@ COPY errors (id, idpage, errorcode, date) FROM stdin;
 
 
 --
--- Name: errors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: errors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('errors_id_seq', 1, false);
 
 
 --
--- Name: errors_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: errors_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('errors_idpage_seq', 1, false);
 
 
 --
--- Name: page_content_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: page_content_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('page_content_idpage_seq', 1, false);
 
 
 --
--- Data for Name: pages; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: pages; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY pages (id, id_website, link, clicks, page_rank, content, title, description, crawl_date, size, load_time, locale) FROM stdin;
@@ -451,21 +417,21 @@ COPY pages (id, id_website, link, clicks, page_rank, content, title, description
 
 
 --
--- Name: pages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: pages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('pages_id_seq', 1, false);
 
 
 --
--- Name: pages_idwebsite_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: pages_idwebsite_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('pages_idwebsite_seq', 1, false);
 
 
 --
--- Data for Name: pages_links; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: pages_links; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY pages_links ("idRefferer", "idDestination") FROM stdin;
@@ -473,21 +439,21 @@ COPY pages_links ("idRefferer", "idDestination") FROM stdin;
 
 
 --
--- Name: pages_links_iddestination_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: pages_links_iddestination_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('pages_links_iddestination_seq', 1, false);
 
 
 --
--- Name: pages_links_idrefferer_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: pages_links_idrefferer_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('pages_links_idrefferer_seq', 1, false);
 
 
 --
--- Data for Name: pages_words; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: pages_words; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY pages_words (idpage, idword, strength) FROM stdin;
@@ -495,21 +461,21 @@ COPY pages_words (idpage, idword, strength) FROM stdin;
 
 
 --
--- Name: pages_words_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: pages_words_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('pages_words_idpage_seq', 1, false);
 
 
 --
--- Name: pages_words_idword_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: pages_words_idword_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('pages_words_idword_seq', 1, false);
 
 
 --
--- Data for Name: websites; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: websites; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY websites (id, url, "siteRank") FROM stdin;
@@ -517,14 +483,14 @@ COPY websites (id, url, "siteRank") FROM stdin;
 
 
 --
--- Name: websites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: websites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('websites_id_seq', 1, false);
 
 
 --
--- Data for Name: words; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: words; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY words (id, text) FROM stdin;
@@ -532,14 +498,14 @@ COPY words (id, text) FROM stdin;
 
 
 --
--- Name: words_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: words_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('words_id_seq', 1, false);
 
 
 --
--- Name: errors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: errors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY errors
@@ -547,7 +513,7 @@ ALTER TABLE ONLY errors
 
 
 --
--- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages
@@ -555,7 +521,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: unique_url; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: unique_url; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY websites
@@ -563,7 +529,7 @@ ALTER TABLE ONLY websites
 
 
 --
--- Name: websites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: websites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY websites
@@ -571,7 +537,7 @@ ALTER TABLE ONLY websites
 
 
 --
--- Name: words_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: words_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY words
@@ -579,7 +545,7 @@ ALTER TABLE ONLY words
 
 
 --
--- Name: fk_iddestination; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_iddestination; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages_links
@@ -587,7 +553,7 @@ ALTER TABLE ONLY pages_links
 
 
 --
--- Name: fk_idpage; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_idpage; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages_words
@@ -595,7 +561,7 @@ ALTER TABLE ONLY pages_words
 
 
 --
--- Name: fk_idpage; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_idpage; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY errors
@@ -603,7 +569,7 @@ ALTER TABLE ONLY errors
 
 
 --
--- Name: fk_idrefferer; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_idrefferer; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages_links
@@ -611,7 +577,7 @@ ALTER TABLE ONLY pages_links
 
 
 --
--- Name: fk_idwebsite; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_idwebsite; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages
@@ -619,7 +585,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: fk_idwork; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: fk_idwork; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages_words
@@ -627,7 +593,7 @@ ALTER TABLE ONLY pages_words
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- Name: public; Type: ACL; Schema: -; Owner: -
 --
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
