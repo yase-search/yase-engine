@@ -27,6 +27,7 @@ public class Search {
 	public Search(String input) throws SQLException {
 		this.input = input;
 		// Pour couper la chaine d'entrée avec les espaces ou les '
+		//TODO: trouver un moyen de sortir le critère de délimitation (en attribut de classe ou plus globalement)
 		String delimiter = "[ ']";
 		String[] splittedInput = input.split(delimiter);
 		
