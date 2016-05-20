@@ -20,7 +20,7 @@ public class WebSiteDAO implements DAO<WebSite> {
 	private static final String ATT_PROTOCOL = "protocol";
 	
 	private static final String SELECT_TABLE = "SELECT * FROM websites where " + ATT_TEXT + " = ? ;";
-	private static final String INSERT_TABLE = "INSERT INTO websites (" + ATT_TEXT + ", " + ATT_SITE_RANK + ", "+ ATT_PROTOCOL+ ") VALUES (?, ?, ?);";
+	private static final String INSERT_TABLE = "INSERT INTO websites (" + ATT_TEXT + ", " + ATT_SITE_RANK + ", "+ ATT_PROTOCOL+ ") VALUES (?, ?, ?::http_protocol);";
 	private static final String DELETE_TABLE = "DELETE FROM websites WHERE id = ? ;";
 
 	public WebSite get(int id) {
