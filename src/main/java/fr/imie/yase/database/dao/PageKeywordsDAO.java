@@ -17,10 +17,10 @@ import fr.imie.yase.dto.PageKeywords;
 public class PageKeywordsDAO implements DAO<PageKeywords> {
 	
 	// La technique à Erwan pour qu'il soit content et qu'il sourit à ses collègues et à la vie en général
-	private static final String SELECT_TABLE = "SELECT * FROM page_words where idpage = ? AND idword = ?;";
-	private static final String INSERT_TABLE = "INSERT INTO page_words (idpage,idword,strength) VALUES (?,?,?);";
-	private static final String DELETE_TABLE = "DELETE FROM page_words WHERE id = ? ;";
-	private static final String ATT_ID = "id";
+	private static final String SELECT_TABLE = "SELECT * FROM pages_words where idpage = ? AND idword = ?;";
+	private static final String INSERT_TABLE = "INSERT INTO pages_words (idpage,idword,strength) VALUES (?,?,?);";
+	private static final String DELETE_TABLE = "";
+
 	private static final String ATT_IDPAGE = "idpage";
 	private static final String ATT_IDKEYWORD = "idword";
 	private static final String ATT_STRENGTH = "strength";
@@ -65,11 +65,6 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
 		preparedStatement.setInt(3, entity.getStrengh());
 
 		preparedStatement.execute();
-		// On récupère l'id si l'insertion en base s'est bien passée.
-		ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-		if (generatedKeys.next()) {
-			entity.setId((int) generatedKeys.getLong(ATT_ID));
-		}
 		return entity;
 	}
 	
