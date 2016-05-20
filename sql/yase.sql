@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.1
+-- Dumped from database version 9.2.8
 -- Dumped by pg_dump version 9.5.1
 
 SET statement_timeout = 0;
@@ -27,15 +27,49 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: btree_gist; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS btree_gist WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION btree_gist; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION btree_gist IS 'support for indexing common datatypes in GiST';
+
+
+--
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
 SET search_path = public, pg_catalog;
+
+--
+-- Name: http_protocol; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE http_protocol AS ENUM (
+    'http',
+    'https'
+);
+
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
-
--- Enums --
-
-CREATE ENUM http_protocol AS ENUM ('http', 'https');
 
 --
 -- Name: errors; Type: TABLE; Schema: public; Owner: -
@@ -261,7 +295,7 @@ ALTER SEQUENCE pages_words_idword_seq OWNED BY pages_words.idword;
 CREATE TABLE websites (
     id bigint NOT NULL,
     domain character varying(255) NOT NULL,
-    "site_rank" integer NOT NULL,
+    site_rank integer NOT NULL,
     protocol http_protocol NOT NULL
 );
 
@@ -385,131 +419,6 @@ ALTER TABLE ONLY words ALTER COLUMN id SET DEFAULT nextval('words_id_seq'::regcl
 
 
 --
--- Data for Name: errors; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY errors (id, idpage, errorcode, date) FROM stdin;
-\.
-
-
---
--- Name: errors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('errors_id_seq', 1, false);
-
-
---
--- Name: errors_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('errors_idpage_seq', 1, false);
-
-
---
--- Name: page_content_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('page_content_idpage_seq', 1, false);
-
-
---
--- Data for Name: pages; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY pages (id, id_website, link, clicks, page_rank, content, title, description, crawl_date, size, load_time, locale) FROM stdin;
-\.
-
-
---
--- Name: pages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('pages_id_seq', 1, false);
-
-
---
--- Name: pages_idwebsite_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('pages_idwebsite_seq', 1, false);
-
-
---
--- Data for Name: pages_links; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY pages_links ("idRefferer", "idDestination") FROM stdin;
-\.
-
-
---
--- Name: pages_links_iddestination_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('pages_links_iddestination_seq', 1, false);
-
-
---
--- Name: pages_links_idrefferer_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('pages_links_idrefferer_seq', 1, false);
-
-
---
--- Data for Name: pages_words; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY pages_words (idpage, idword, strength) FROM stdin;
-\.
-
-
---
--- Name: pages_words_idpage_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('pages_words_idpage_seq', 1, false);
-
-
---
--- Name: pages_words_idword_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('pages_words_idword_seq', 1, false);
-
-
---
--- Data for Name: websites; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY websites (id, domain, "site_rank") FROM stdin;
-\.
-
-
---
--- Name: websites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('websites_id_seq', 1, false);
-
-
---
--- Data for Name: words; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY words (id, text) FROM stdin;
-\.
-
-
---
--- Name: words_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('words_id_seq', 1, false);
-
-
---
 -- Name: errors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -547,6 +456,13 @@ ALTER TABLE ONLY websites
 
 ALTER TABLE ONLY words
     ADD CONSTRAINT words_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: words_text_idx; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX words_text_idx ON words USING btree (text);
 
 
 --
