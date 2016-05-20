@@ -16,9 +16,9 @@ import fr.imie.yase.dto.Page;
 public class PageDAO implements DAO<Page>{
 	
 	private static String INSERT_TABLE = String.join("",
-		"INSERT INTO pages",
-		"(id_website, link, content, title, description, crawl_date, size, load_time, locale)",
-		"values (?,?,?,?,?,?,?,?,?)"
+		"INSERT INTO pages",
+		"(id_website, url, content, title, description, crawl_date, size, load_time, locale)",
+		"values (?,?,?,?,?,NOW(),?,?,?)"
 	);
 	private static final String ATT_ID = "id";
 
@@ -44,7 +44,7 @@ public class PageDAO implements DAO<Page>{
 		}
 		
 		String req = String.join("",
-			"SELECT p.id, p.description, p.title, p.link, p.content from pages p ",
+			"SELECT p.id, p.description, p.title, p.url, p.content from pages p ",
 			"INNER JOIN pages_words pw ON pw.idpage = p.id ",
 			"INNER JOIN words w ON w.id = pw.idword ",
 			"WHERE w.text IN (",
@@ -67,7 +67,7 @@ public class PageDAO implements DAO<Page>{
 			p.setTitle(res.getString("title"));
 			p.setDescription(res.getString("description"));
 			p.setContent(res.getString("content"));
-			p.setUrl(res.getString("link"));
+			p.setUrl(res.getString("url"));
 			
 			ret.add(p);
 		}
@@ -94,10 +94,10 @@ public class PageDAO implements DAO<Page>{
 		statement.setString(3, entity.getContent());
 		statement.setString(4, entity.getTitle());
 		statement.setString(5, entity.getDescription());
-		statement.setString(6, entity.getCrawl_date());
-		statement.setInt(7, entity.getSize());
-		statement.setInt(8, entity.getLoad_time());
-		statement.setString(9,  entity.getLocale());
+//	TODO	statement.setString(6, entity.getCrawl_date());
+		statement.setInt(6, entity.getSize());
+		statement.setInt(7, entity.getLoad_time());
+		statement.setString(8,  entity.getLocale());
 		
 		statement.execute();
 		
@@ -109,9 +109,9 @@ public class PageDAO implements DAO<Page>{
 		return entity;
 	}
 	
-	public Page findByURL(Page page) throws Exception{
+	public Page findByURL(Page page) throws SQLException {
 		Connection con = DBConnector.getInstance();
-		String sql = "SELECT * FROM pages WHERE url = ?";
+		String sql = "SELECT * FROM pages WHERE url = ?";
 		
 		PreparedStatement statement = con.prepareStatement(sql);
 		statement.setString(1,  page.getUrl());
@@ -119,9 +119,6 @@ public class PageDAO implements DAO<Page>{
 		
 		if(res.next()){
 			page.setId(res.getInt("id"));
-		} else{
-			// TODO
-			throw new Exception("No results");
 		}
 		return page;
 	}
