@@ -33,6 +33,10 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
+-- Enums --
+
+CREATE ENUM http_protocol AS ENUM ('http', 'https');
+
 --
 -- Name: errors; Type: TABLE; Schema: public; Owner: -
 --
@@ -257,7 +261,8 @@ ALTER SEQUENCE pages_words_idword_seq OWNED BY pages_words.idword;
 CREATE TABLE websites (
     id bigint NOT NULL,
     domain character varying(255) NOT NULL,
-    "site_rank" integer NOT NULL
+    "site_rank" integer NOT NULL,
+    protocol http_protocol NOT NULL
 );
 
 
