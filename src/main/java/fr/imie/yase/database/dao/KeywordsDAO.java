@@ -31,7 +31,7 @@ public class KeywordsDAO implements DAO<Keywords> {
 			PreparedStatement preparedStatement = preparedStatementOneWords((String) keywords);
 			ResultSet result = preparedStatement.executeQuery();
 			System.out.println(result.toString());
-			// Si la requete est diff�rents de null, on ajoute le Keywords � la liste.
+			// Si la requete est différente de null, on ajoute le Keywords à la liste.
 			if (!result.wasNull()) {
 				while (result.next()) {              
 				    Keywords objectKeywords = new Keywords(result.getString(ATT_TEXT), true, result.getInt(ATT_ID));
@@ -59,7 +59,7 @@ public class KeywordsDAO implements DAO<Keywords> {
 		PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TABLE, Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, entity.getValue());
 		preparedStatement.execute();
-		// On r�cup�re l'id si l'insertion en base s'est bien pass�.
+		// On récupère l'id si l'insertion en base s'est bien passé.
 		ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 		if (generatedKeys.next()) {
 			entity.setId((int) generatedKeys.getLong(ATT_ID));

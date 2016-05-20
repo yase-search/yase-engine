@@ -12,6 +12,7 @@ import java.util.Map;
 import fr.imie.yase.database.DBConnector;
 import fr.imie.yase.dto.Keywords;
 import fr.imie.yase.dto.Page;
+import fr.imie.yase.dto.WebSite;
 
 public class PageDAO implements DAO<Page>{
 	
@@ -44,9 +45,10 @@ public class PageDAO implements DAO<Page>{
 		}
 		
 		String req = String.join("",
-			"SELECT p.id, p.description, p.title, p.url, p.content from pages p ",
+			"SELECT p.id, p.description, p.title, p.url, p.content, ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
 			"INNER JOIN pages_words pw ON pw.idpage = p.id ",
 			"INNER JOIN words w ON w.id = pw.idword ",
+			"INNER JOIN websites ws ON ws.id = p.id_website ",
 			"WHERE w.text IN (",
 			preparedArgs.substring(0, preparedArgs.length() - 1),
 			");"
@@ -68,6 +70,7 @@ public class PageDAO implements DAO<Page>{
 			p.setDescription(res.getString("description"));
 			p.setContent(res.getString("content"));
 			p.setUrl(res.getString("url"));
+			p.setWebsite(new WebSite(res.getInt("idWebsite"), res.getString("domain"), res.getString("protocol")));
 			
 			ret.add(p);
 		}

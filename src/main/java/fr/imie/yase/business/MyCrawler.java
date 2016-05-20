@@ -17,7 +17,6 @@ import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
-import fr.imie.yase.database.dao.DAO;
 import fr.imie.yase.database.dao.PageDAO;
 import fr.imie.yase.database.dao.WebSiteDAO;
 import fr.imie.yase.dto.WebSite;
@@ -68,7 +67,7 @@ public class MyCrawler extends WebCrawler {
 //    public void insertPage()
      
     /**
-     * Permet d'ajouter une page crawler en base de donn2es.
+     * Permet d'ajouter une page crawler en base de données.
      * @param htmlParseData HtmlParseData
      * @throws SQLException 
      * @throws Exception 
@@ -104,14 +103,16 @@ public class MyCrawler extends WebCrawler {
      */
     public WebSite createWebSite(Page page) throws SQLException {
     	String domain = page.getWebURL().getDomain();
-    	WebSite website = new WebSite(null, domain);
+    	String url = page.getWebURL().getURL();
+    	String protocol = url.substring(0, url.indexOf("://"));
+    	WebSite website = new WebSite(null, domain, protocol);
     	WebSiteDAO daoWebSite = new WebSiteDAO();
     	Map<String, Object> mapWebSite = new HashMap<String, Object>();
     	List<WebSite> listWebSite = new ArrayList<WebSite>();
     	listWebSite.add(website);
         mapWebSite.put("website", listWebSite);
    	 	List<WebSite> results = daoWebSite.find(mapWebSite);
-   	 	WebSite websiteEntity = new WebSite(null, domain);
+   	 	WebSite websiteEntity = new WebSite(null, domain, protocol);
    	 	if (results.size() > 0) {
    	 		websiteEntity = results.get(0);
    	 	} else {
@@ -128,7 +129,7 @@ public class MyCrawler extends WebCrawler {
     }
     
     /**
-     * Permet de r�cup�rer la description d'un site
+     * Permet de récupérer la description d'un site
      * @param htmlParseData
      * @return description String
      */

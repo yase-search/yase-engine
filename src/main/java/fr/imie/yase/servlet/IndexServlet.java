@@ -35,10 +35,10 @@ public class IndexServlet extends HttpServlet {
 			System.out.println(request.getParameter("search"));
 			Search search = new Search(request.getParameter("search"));
 			request.setAttribute("search", search);
+			System.out.println(search.getPages().get(0).getWebsite().getProtocol());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Search.jsp");
 		rd.forward(request, response);
 	}
