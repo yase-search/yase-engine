@@ -96,7 +96,7 @@ public class MyCrawler extends WebCrawler {
     	 entity.setLoad_time(1);
     	 entity.setLocale(page.getLanguage());
     	 entity.setSize(html.length());
-    	 entity.setUrl(page.getWebURL().getURL());
+    	 entity.setUrl(page.getWebURL().getPath());
     	 entity.setWebsite(website);
     	 
     	 // Insert page
