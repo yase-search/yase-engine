@@ -74,7 +74,7 @@ public class KeywordsDAO implements DAO<Keywords> {
 	 * @throws SQLException SQLException
 	 */
 	public PreparedStatement preparedStatementOneWords(String keywords) throws SQLException {
-		Connection  connection = DBConnector.getInstance();
+		Connection connection = DBConnector.getInstance();
 		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TABLE);
 		preparedStatement.setString(1, (String) keywords);
 		return preparedStatement;

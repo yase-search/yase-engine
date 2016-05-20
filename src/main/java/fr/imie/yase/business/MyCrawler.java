@@ -71,7 +71,7 @@ public class MyCrawler extends WebCrawler {
 //    public void insertPage()
      
     /**
-     * Permet d'ajouter une page crawler en base de données.
+     * Permet d'ajouter une page crawler en base de donn2es.
      * @param htmlParseData HtmlParseData
      * @throws Exception 
      */
@@ -91,7 +91,7 @@ public class MyCrawler extends WebCrawler {
     	 entity.setWebsite(website);
     	 
     	 PageDAO daoPage = new PageDAO();
-    	 // On vérifie si la page existe déjà en base
+    	 // On vÃ©rifie si la page existe dÃ©jÃ  en base
     	 fr.imie.yase.dto.Page result = daoPage.findByURL(entity);
     	 if (result.getId() == null) {
     		 result = daoPage.create(entity);
@@ -100,7 +100,7 @@ public class MyCrawler extends WebCrawler {
     }
     
     /**
-     * Permet de générer une entity WebSite
+     * Permet de gÃ©nÃ©rer une entity WebSite
      * @param page Page
      * @return website WebSite
      * @throws SQLException 

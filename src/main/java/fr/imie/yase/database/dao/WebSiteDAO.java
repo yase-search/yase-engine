@@ -30,7 +30,7 @@ public class WebSiteDAO implements DAO<WebSite> {
 		for (Object url : (List<Object>) params.get("website")) {
 			PreparedStatement preparedStatement = preparedStatementFind((String) url);
 			ResultSet result = preparedStatement.executeQuery();
-			// Si la requete est différents de null, on ajoute le Keywords à la liste.
+			// Si la requete est diffÃ©rents de null, on ajoute le Keywords Ã  la liste.
 			if (!result.wasNull()) {
 				WebSite objectWebSite = new WebSite(result.getInt(ATT_ID), result.getString(ATT_TEXT));
 				listWebSite.add(objectWebSite);
@@ -51,7 +51,7 @@ public class WebSiteDAO implements DAO<WebSite> {
 		PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TABLE, Statement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, entity.getDomain());
 		preparedStatement.execute();
-		// On récupère l'id si l'insertion en base s'est bien passé.
+		// On rÃ©cupÃ¨re l'id si l'insertion en base s'est bien passÃ©.
 		ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 		if (generatedKeys.next()) {
 			entity.setId((int) generatedKeys.getLong(ATT_ID));
@@ -60,7 +60,7 @@ public class WebSiteDAO implements DAO<WebSite> {
 	}
 	
 	/** 
-	 * Permet de préparer l'objet preparedStatement pour une requete find
+	 * Permet de prÃ©parer l'objet preparedStatement pour une requete find
 	 * @param keywords String
 	 * @return PreparedStatement PreparedStatement
 	 * @throws SQLException SQLException
