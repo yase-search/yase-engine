@@ -32,13 +32,9 @@ public class WebSiteDAO implements DAO<WebSite> {
 		for (WebSite website : (List<WebSite>) params.get("website")) {
 			PreparedStatement preparedStatement = preparedStatementFind(website.getDomain());
 			ResultSet result = preparedStatement.executeQuery();
-<<<<<<< HEAD
-			// Si la requete est différents de null, on ajoute le Keywords à la liste.
-			if (!result.wasNull()) {
-=======
-			// Si la requete est diff�rents de null, on ajoute le Keywords � la liste.
+			
+			// Si la requete est différente de null, on ajoute le Keywords à la liste.
 			if (result.next()) {
->>>>>>> dcc852647265a36cbd016b8c5fec8e355af4e0ce
 				WebSite objectWebSite = new WebSite(result.getInt(ATT_ID), result.getString(ATT_TEXT));
 				listWebSite.add(objectWebSite);
 			}
