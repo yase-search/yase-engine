@@ -1,27 +1,36 @@
 package fr.imie.yase.dto;
 
 public class PageKeywords {
-	private Page page;
-	private Keywords keyword;
+	private int id;
+	private int idPage;
+	private int idKeyword;
 	private Integer strengh;
 	
-	public PageKeywords(Page page, Keywords keyword, Integer strengh){
-		this.page = page;
-		this.keyword = keyword;
+	public PageKeywords(int page, int keyword, Integer strengh){
+		this.idPage = page;
+		this.idKeyword = keyword;
 		this.strengh = strengh;
 	}
 	
-	public Page getPage() {
-		return page;
+	public int getId() {
+		return id;
 	}
-	public void setPage(Page page) {
-		this.page = page;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	public Keywords getKeyword() {
-		return keyword;
+
+	public int getIdPage() {
+		return idPage;
 	}
-	public void setKeyword(Keywords keyword) {
-		this.keyword = keyword;
+	public void setIdPage(int page) {
+		this.idPage = page;
+	}
+	public int getIdKeyword() {
+		return idKeyword;
+	}
+	public void setIdKeyword(int keyword) {
+		this.idKeyword = keyword;
 	}
 	public Integer getStrengh() {
 		return strengh;

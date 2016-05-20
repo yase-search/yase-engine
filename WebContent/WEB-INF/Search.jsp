@@ -31,7 +31,7 @@
 	<div class="wrapper search-wrapper">
 		<c:forEach var="page" items="${search.pages}">
 			<div class="result">
-				<a href="<c:out value="${page.website.protocol}://${page.website.domain}${page.url}" />" class="title"><c:out
+				<a href="<c:out value="${page.website.protocol}://${page.website.domain}${page.url}" />" class="title" target="_blank"><c:out
 						value="${page.title}" /></a>
 				<p class="url">
 					<c:out value="${page.website.domain}${page.url}" />
