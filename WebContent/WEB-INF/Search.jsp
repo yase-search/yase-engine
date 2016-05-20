@@ -31,13 +31,13 @@
 	<div class="wrapper search-wrapper">
 		<c:forEach var="page" items="${search.pages}">
 			<div class="result">
-				<a href="<c:out value="${page.value.url}" />" class="title"><c:out
-						value="${page.value.title}" /></a>
+				<a href="<c:out value="${page.url}" />" class="title"><c:out
+						value="${page.title}" /></a>
 				<p class="url">
-					<c:out value="${page.value.url}" />
+					<c:out value="${page.url}" />
 				</p>
 				<p class="description">
-					<c:out value="${page.value.description}" />
+					<c:out value="${page.description}" />
 				</p>
 			</div>
 		</c:forEach>
