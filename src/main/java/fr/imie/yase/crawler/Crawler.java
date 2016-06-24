@@ -32,6 +32,13 @@ public class Crawler {
 	     * which are found in these pages
 	     */
 
+		/*
+		controller.addSeed("http://www.ebay.fr");
+		controller.addSeed("http://www.materiel.net");
+		controller.addSeed("http://www.wikipedia.fr");
+		controller.addSeed("http://www.lequipe.fr");
+		controller.addSeed("http://www.google.fr");
+		 */
 	    controller.addSeed("http://stackoverflow.com/");
 //	    controller.addSeed("https://openclassrooms.com/");
 //	    controller.addSeed("https://twitter.com/");

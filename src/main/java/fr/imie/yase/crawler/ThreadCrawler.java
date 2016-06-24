@@ -122,7 +122,7 @@ public class ThreadCrawler extends Thread {
     	 entity.setLoad_time(1);
     	 entity.setLocale(page.getLanguage());
     	 entity.setSize(html.length());
-    	 entity.setUrl(page.getWebURL().getPath());
+		 entity.setUrl(page.getWebURL().getURL());
     	 entity.setWebsite(website);
     	 
     	 // Insert page
