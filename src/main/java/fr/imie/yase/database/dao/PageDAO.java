@@ -28,37 +28,26 @@ public class PageDAO implements DAO<Page>{
 		return null;
 	}
 
-	public List<Page> find(Map<String, Object> params) throws SQLException {
-		List<Keywords> keywords = (List<Keywords>) params.get("keywords");
+	public List<Page> find(Object param) throws SQLException {
+		Keywords keywords = (Keywords) param;
 		List<Page> ret = new ArrayList<Page>();
 		
-		if(keywords.size() <= 0){
+		if(keywords == null){
 			return ret;
 		}
 		
 		Connection con = DBConnector.getInstance();
-		
-		String preparedArgs = "";
-		
-		for(int i = 0, j = keywords.size(); i < j; i++){
-			preparedArgs += "?,";
-		}
 		
 		String req = String.join("",
 			"SELECT DISTINCT(p.id), p.description, p.title, p.url, p.content, ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
 			"INNER JOIN pages_words pw ON pw.idpage = p.id ",
 			"INNER JOIN words w ON w.id = pw.idword ",
 			"INNER JOIN websites ws ON ws.id = p.id_website ",
-			"WHERE w.text IN (",
-			preparedArgs.substring(0, preparedArgs.length() - 1),
-			");"
+			"WHERE w.text IN (?);"
 		);
 				
 		PreparedStatement statement = con.prepareStatement(req);
-		
-		for(int i = 0, j = keywords.size(); i < j; i++){
-			statement.setString(i + 1, keywords.get(i).getValue());
-		}
+		statement.setString(1, keywords.getValue());
 		
 		ResultSet res = statement.executeQuery();
 		
@@ -124,5 +113,54 @@ public class PageDAO implements DAO<Page>{
 			page.setId(res.getInt("id"));
 		}
 		return page;
+	}
+	
+	public List<Page> findByListKeywords(List<Keywords> params) throws SQLException {
+		List<Page> ret = new ArrayList<Page>();
+		
+		if(params.size() <= 0){
+			return ret;
+		}
+		
+		Connection con = DBConnector.getInstance();
+		
+		String preparedArgs = "";
+		
+		for(int i = 0, j = params.size(); i < j; i++){
+			preparedArgs += "?,";
+		}
+		
+		String req = String.join("",
+			"SELECT DISTINCT(p.id), p.description, p.title, p.url, p.content, ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
+			"INNER JOIN pages_words pw ON pw.idpage = p.id ",
+			"INNER JOIN words w ON w.id = pw.idword ",
+			"INNER JOIN websites ws ON ws.id = p.id_website ",
+			"WHERE w.text IN (",
+			preparedArgs.substring(0, preparedArgs.length() - 1),
+			");"
+		);
+				
+		PreparedStatement statement = con.prepareStatement(req);
+		
+		for(int i = 0, j = params.size(); i < j; i++){
+			statement.setString(i + 1, params.get(i).getValue());
+		}
+		
+		ResultSet res = statement.executeQuery();
+		
+		while(res.next()){
+			System.out.println(res.getString("url"));
+			Page p = new Page();
+			p.setId(res.getInt("id"));
+			p.setTitle(res.getString("title"));
+			p.setDescription(res.getString("description"));
+			p.setContent(res.getString("content"));
+			p.setUrl(res.getString("url"));
+			p.setWebsite(new WebSite(res.getInt("idWebsite"), res.getString("domain"), res.getString("protocol")));
+			
+			ret.add(p);
+		}
+		
+		return ret;
 	}
 }

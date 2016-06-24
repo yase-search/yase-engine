@@ -30,18 +30,16 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
 		return null;
 	}
 
-	public List<PageKeywords> find(Map<String, Object> params) throws SQLException {
+	public List<PageKeywords> find(Object param) throws SQLException {
 		List<PageKeywords> listPageKeywords = new ArrayList<PageKeywords>();
-		for (Object pageKeywords : (List<Object>)params.get("pageKeywords")) {
-			PreparedStatement preparedStatement = preparedStatementTwoIds((PageKeywords) pageKeywords);
-			ResultSet result = preparedStatement.executeQuery();
-			
-			// Si la requete est différente de null, on ajoute le PageKeywords à la liste.
-			if (!result.wasNull()) {
-				while (result.next()) {              
-				    PageKeywords objectKeywords = new PageKeywords(result.getInt(ATT_IDPAGE), result.getInt(ATT_IDKEYWORD), result.getInt(ATT_STRENGTH));
-				    listPageKeywords.add(objectKeywords);
-				}
+		PreparedStatement preparedStatement = preparedStatementTwoIds((PageKeywords) param);
+		ResultSet result = preparedStatement.executeQuery();
+		
+		// Si la requete est différente de null, on ajoute le PageKeywords à la liste.
+		if (!result.wasNull()) {
+			while (result.next()) {              
+			    PageKeywords objectKeywords = new PageKeywords(result.getInt(ATT_IDPAGE), result.getInt(ATT_IDKEYWORD), result.getInt(ATT_STRENGTH));
+			    listPageKeywords.add(objectKeywords);
 			}
 		}
 		return listPageKeywords;

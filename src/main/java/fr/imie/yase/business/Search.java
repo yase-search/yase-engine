@@ -47,25 +47,15 @@ public class Search {
 				keywords.add(string);
 		}
 
-		// On créé une Map avec pour index "keywords" et pour valeur notre liste
-		// de keywords
-		HashMap<String, Object> paramsKey = new HashMap<String, Object>();
-		paramsKey.put("keywords", keywords);
-
 		// On récupère notre liste d'objets Keywords
-		this.keywords = keywordsDAO.find(paramsKey);
-
-		// On créé une Map avec pour index "keywords" et pour valeur notre liste
-		// de pages
-		HashMap<String, Object> paramsPage = new HashMap<String, Object>();
-		paramsPage.put("keywords", this.keywords);
+		this.keywords = keywordsDAO.findByListKeywords(keywords);
 
 		// On récupère notre liste de Page
-		this.pages = pageDAO.find(paramsPage);
+		this.pages = pageDAO.findByListKeywords(this.keywords);
 	}
 
 	/**
-	 * Renvoie les r�sultats de la recherche au client.
+	 * Renvoie les résultats de la recherche au client.
 	 * 
 	 * @return String JSON
 	 */

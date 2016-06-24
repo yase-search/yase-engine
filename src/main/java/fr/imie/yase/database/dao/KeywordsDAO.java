@@ -24,19 +24,17 @@ public class KeywordsDAO implements DAO<Keywords> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public List<Keywords> find(Map<String, Object> params) throws SQLException {
+	
+	public List<Keywords> find(Object param) throws SQLException {
 		List<Keywords> listKeywords = new ArrayList<Keywords>();
-		for (Object keywords : (List<Object>)params.get("keywords")) {
-			PreparedStatement preparedStatement = preparedStatementOneWords((String) keywords);
-			ResultSet result = preparedStatement.executeQuery();
-			System.out.println(result.toString());
-			// Si la requete est différente de null, on ajoute le Keywords à la liste.
-			if (!result.wasNull()) {
-				while (result.next()) {              
-				    Keywords objectKeywords = new Keywords(result.getString(ATT_TEXT), true, result.getInt(ATT_ID));
-				    listKeywords.add(objectKeywords);
-				}
+		PreparedStatement preparedStatement = preparedStatementOneWords((String) param);
+		ResultSet result = preparedStatement.executeQuery();
+		System.out.println(result.toString());
+		// Si la requete est différente de null, on ajoute le Keywords à la liste.
+		if (!result.wasNull()) {
+			while (result.next()) {              
+			    Keywords objectKeywords = new Keywords(result.getString(ATT_TEXT), true, result.getInt(ATT_ID));
+			    listKeywords.add(objectKeywords);
 			}
 		}
 		return listKeywords;
@@ -67,8 +65,31 @@ public class KeywordsDAO implements DAO<Keywords> {
 		return entity;
 	}
 	
+	/**
+	 * Permet de rechercher par liste de Keywords
+	 * @param List<String> params
+	 * @return List<Keywords> listKeywords 
+	 * @throws SQLException SQLException
+	 */
+	public List<Keywords> findByListKeywords(List<String> params) throws SQLException {
+		List<Keywords> listKeywords = new ArrayList<Keywords>();
+		for (Object keywords : params) {
+			PreparedStatement preparedStatement = preparedStatementOneWords((String) keywords);
+			ResultSet result = preparedStatement.executeQuery();
+			System.out.println(result.toString());
+			// Si la requete est différente de null, on ajoute le Keywords à la liste.
+			if (!result.wasNull()) {
+				while (result.next()) {              
+				    Keywords objectKeywords = new Keywords(result.getString(ATT_TEXT), true, result.getInt(ATT_ID));
+				    listKeywords.add(objectKeywords);
+				}
+			}
+		}
+		return listKeywords;
+	}
+	
 	/** 
-	 * Permet de pr�parer l'objet preparedStatement pour une requete find
+	 * Permet de préparer l'objet preparedStatement pour une requete find
 	 * @param keywords String
 	 * @return PreparedStatement PreparedStatement
 	 * @throws SQLException SQLException

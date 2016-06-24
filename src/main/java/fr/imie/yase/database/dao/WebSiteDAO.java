@@ -28,17 +28,16 @@ public class WebSiteDAO implements DAO<WebSite> {
 		return null;
 	}
 
-	public List<WebSite> find(Map<String, Object> params) throws SQLException {
+	public List<WebSite> find(Object param) throws SQLException {
 		List<WebSite> listWebSite = new ArrayList<WebSite>();
-		for (WebSite website : (List<WebSite>) params.get("website")) {
-			PreparedStatement preparedStatement = preparedStatementFind(website.getDomain());
-			ResultSet result = preparedStatement.executeQuery();
-			
-			// Si la requete est différente de null, on ajoute le Keywords à la liste.
-			if (result.next()) {
-				WebSite objectWebSite = new WebSite(result.getInt(ATT_ID), result.getString(ATT_TEXT), result.getString(ATT_PROTOCOL));
-				listWebSite.add(objectWebSite);
-			}
+		WebSite website = (WebSite) param;
+		PreparedStatement preparedStatement = preparedStatementFind(website.getDomain());
+		ResultSet result = preparedStatement.executeQuery();
+		
+		// Si la requete est différente de null, on ajoute le Keywords à la liste.
+		if (result.next()) {
+			WebSite objectWebSite = new WebSite(result.getInt(ATT_ID), result.getString(ATT_TEXT), result.getString(ATT_PROTOCOL));
+			listWebSite.add(objectWebSite);
 		}
 		return listWebSite;
 	}

@@ -121,11 +121,7 @@ public class MyCrawler extends WebCrawler {
     	String protocol = url.substring(0, url.indexOf("://"));
     	WebSite website = new WebSite(null, domain, protocol);
     	WebSiteDAO daoWebSite = new WebSiteDAO();
-    	Map<String, Object> mapWebSite = new HashMap<String, Object>();
-    	List<WebSite> listWebSite = new ArrayList<WebSite>();
-    	listWebSite.add(website);
-        mapWebSite.put("website", listWebSite);
-   	 	List<WebSite> results = daoWebSite.find(mapWebSite);
+   	 	List<WebSite> results = daoWebSite.find(website);
    	 	WebSite websiteEntity = new WebSite(null, domain, protocol);
    	 	if (results.size() > 0) {
    	 		websiteEntity = results.get(0);
@@ -149,11 +145,7 @@ public class MyCrawler extends WebCrawler {
         			// Insertion ou lecture en base
             		Keywords words = new Keywords(tabWords[i], true, null);
             		Keywords keywordsEntity = new Keywords(tabWords[i], true, null);
-            		Map<String, Object> mapKeywords = new HashMap<String, Object>();
-            		List<String> listKeywords = new ArrayList<String>();
-            		listKeywords.add(words.getValue());
-            		mapKeywords.put("keywords", listKeywords);
-            		List<Keywords> results = daoKeywords.find(mapKeywords);
+            		List<Keywords> results = daoKeywords.find(words);
             		if (results.size() > 0) {
             			keywordsEntity = results.get(0);
             			System.out.println("Mot " + keywordsEntity.getValue() + " trouvé");
@@ -165,11 +157,7 @@ public class MyCrawler extends WebCrawler {
             		// Ajout de relation entre le site et le mot
             		PageKeywords pageKeywords = new PageKeywords(page.getId(), keywordsEntity.getId(), 1);
             		PageKeywordsDAO pageKeywordsDao = new PageKeywordsDAO();
-            		Map<String, Object> mapPageKeywords = new HashMap<String, Object>();
-            		List<PageKeywords> listPageKeywords = new ArrayList<PageKeywords>();
-            		listPageKeywords.add(pageKeywords);
-            		mapPageKeywords.put("pageKeywords", listPageKeywords);
-            		List<PageKeywords> listPageKeywordsEntity = pageKeywordsDao.find(mapPageKeywords);
+            		List<PageKeywords> listPageKeywordsEntity = pageKeywordsDao.find(pageKeywords);
             		// Si la relation entre une page et un mot n'existe pas, on la crèe.
             		if (listPageKeywordsEntity.size() == 0) {
             			pageKeywordsDao.create(pageKeywords);

@@ -8,7 +8,7 @@ public interface DAO<T> {
 
 	public T get(int id);
 	
-	public List<T> find(Map<String, Object> params) throws SQLException;
+	public List<T> find(Object params) throws SQLException;
 	
 	public boolean delete(int id) throws SQLException;
 	
