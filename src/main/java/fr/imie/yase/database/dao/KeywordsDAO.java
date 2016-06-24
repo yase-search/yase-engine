@@ -27,9 +27,9 @@ public class KeywordsDAO implements DAO<Keywords> {
 	
 	public List<Keywords> find(Object param) throws SQLException {
 		List<Keywords> listKeywords = new ArrayList<Keywords>();
-		PreparedStatement preparedStatement = preparedStatementOneWords((String) param);
+		Keywords keywords = (Keywords) param;
+		PreparedStatement preparedStatement = preparedStatementOneWords(keywords.getValue());
 		ResultSet result = preparedStatement.executeQuery();
-		System.out.println(result.toString());
 		// Si la requete est différente de null, on ajoute le Keywords à la liste.
 		if (!result.wasNull()) {
 			while (result.next()) {              
