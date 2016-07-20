@@ -1,4 +1,4 @@
-package fr.imie.yase.business;
+package fr.imie.yase.crawler;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
@@ -31,9 +31,18 @@ public class Crawler {
 	     * URLs that are fetched and then the crawler starts following links
 	     * which are found in these pages
 	     */
-	    controller.addSeed("http://www.ics.uci.edu/~lopes/");
-	    controller.addSeed("http://www.ics.uci.edu/~welling/");
-	    controller.addSeed("http://www.ics.uci.edu/");
+
+		/*
+		controller.addSeed("http://www.ebay.fr");
+		controller.addSeed("http://www.materiel.net");
+		controller.addSeed("http://www.wikipedia.fr");
+		controller.addSeed("http://www.lequipe.fr");
+		controller.addSeed("http://www.google.fr");
+		 */
+	    controller.addSeed("http://stackoverflow.com/");
+//	    controller.addSeed("https://openclassrooms.com/");
+//	    controller.addSeed("https://twitter.com/");
+//	    controller.addSeed("https://www.e-monsite.com/");
 
 	    /*
 	     * Start the crawl. This is a blocking operation, meaning that your code

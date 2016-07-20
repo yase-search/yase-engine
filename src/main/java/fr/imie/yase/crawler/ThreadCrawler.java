@@ -1,6 +1,4 @@
-package fr.imie.yase.business;
-
-
+package fr.imie.yase.crawler;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -11,16 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.regex.Pattern;
-
-import org.apache.commons.codec.binary.StringUtils;
-import org.apache.poi.util.StringUtil;
 
 import edu.uci.ics.crawler4j.crawler.Page;
-import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
-import edu.uci.ics.crawler4j.url.WebURL;
-import fr.imie.yase.database.dao.DAO;
 import fr.imie.yase.database.dao.KeywordsDAO;
 import fr.imie.yase.database.dao.PageDAO;
 import fr.imie.yase.database.dao.PageKeywordsDAO;
@@ -29,52 +20,87 @@ import fr.imie.yase.dto.Keywords;
 import fr.imie.yase.dto.PageKeywords;
 import fr.imie.yase.dto.WebSite;
 
-public class MyCrawler extends WebCrawler {
-
-    private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
-                                                           + "|png|mp3|mp3|zip|gz))$");
-    
-    private final static String REGEX_SPECIAL_CHAR = "[^À-Ÿà-ÿ\\w-]";
-
-    /**
-     * This method receives two parameters. The first parameter is the page
-     * in which we have discovered this new url and the second parameter is
-     * the new url. You should implement this function to specify whether
-     * the given url should be crawled or not (based on your crawling logic).
-     * In this example, we are instructing the crawler to ignore urls that
-     * have css, js, git, ... extensions and to only accept urls that start
-     * with "http://www.ics.uci.edu/". In this case, we didn't need the
-     * referringPage parameter to make the decision.
-     */
-     @Override
-     public boolean shouldVisit(Page referringPage, WebURL url) {
-         String href = url.getURL().toLowerCase();
-         return !FILTERS.matcher(href).matches()
-                && href.startsWith("http://www.ics.uci.edu/");
-     }
-
-     /**
-      * This function is called when a page is fetched and ready
-      * to be processed by your program.
-      */
-     @Override
-     public void visit(Page crawlerPage) {
-         String url = crawlerPage.getWebURL().getURL();
-         System.out.println("URL: " + url);
-         if (crawlerPage.getParseData() instanceof HtmlParseData) {
-        	 WebSite website;
+/**
+ * Cette classe permet d'insérer en base le contenu push par MyCrawler dans la liste listPage.
+ * @author Erwan
+ *
+ */
+public class ThreadCrawler extends Thread {
+	
+	private final static String REGEX_SPECIAL_CHAR = "[^À-Ÿà-ÿ\\w-]";
+	
+	private List<Page> todoListPage;
+	
+	private List<Page> completeListPage;
+	
+	private int nbrSleep = 0;
+	
+	private boolean start = false;
+	
+	/**
+	 * Permet de déclencher le Thread
+	 */
+	public void run() {
+		start = true;
+		System.out.println("Le thread du Crawler demarre.");
+		try {
+			launchCrawl();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Thread.currentThread().interrupt();
+		start = false;
+		System.out.println("Le thread du Crawler s'arrète.");
+	}
+	
+	/**
+	 * Permet vérifier si un page est disponible pour l'insertion en base. Si oui on appelle CrawlPage()
+	 * @throws InterruptedException
+	 */
+	private void launchCrawl() throws InterruptedException {
+		Page page = getPage();
+		if (page != null) {
+			nbrSleep = 0;
 			try {
-				website = createWebSite(crawlerPage);
-				fr.imie.yase.dto.Page page = createPage(crawlerPage, website);
-				createWords(page, crawlerPage);
-			} catch (SQLException e) {
+				crawlPage(page);
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-         }
-    }
-  
-    /**
+		} else {
+			Thread.sleep(1000);
+			nbrSleep++;
+			// Si le Thread dort depuis 30 sec, on l'arrete.
+			if (nbrSleep == 30) {
+				return;
+			}
+		}
+		launchCrawl();
+	}
+	
+	/**
+	 * Permet de lancer le crawl de la page passé en paramètre
+	 * @param crawlerPage Page
+	 * @throws InterruptedException 
+	 */
+	private void crawlPage(Page crawlerPage) throws InterruptedException {
+		WebSite website;
+		try {
+			website = createWebSite(crawlerPage);
+			fr.imie.yase.dto.Page page = createPage(crawlerPage, website);
+			// On ajoute on base la liste des mots
+			createWords(page, crawlerPage);
+			
+			HtmlParseData htmlParseData = (HtmlParseData) crawlerPage.getParseData();
+			System.out.println("Ajout du site à la pool : " + htmlParseData.getTitle());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
      * Permet d'ajouter une page crawler en base de données.
      * @param htmlParseData HtmlParseData
      * @throws SQLException 
@@ -96,7 +122,7 @@ public class MyCrawler extends WebCrawler {
     	 entity.setLoad_time(1);
     	 entity.setLocale(page.getLanguage());
     	 entity.setSize(html.length());
-    	 entity.setUrl(page.getWebURL().getPath());
+		 entity.setUrl(page.getWebURL().getURL());
     	 entity.setWebsite(website);
     	 
     	 // Insert page
@@ -131,6 +157,12 @@ public class MyCrawler extends WebCrawler {
     	return websiteEntity;
     }
     
+    /**
+     * Permet d'insérer un mot en base ou simplement de le récupérer.
+     * @param page
+     * @param crawlerPage
+     * @throws SQLException
+     */
     private void createWords(fr.imie.yase.dto.Page page, Page crawlerPage) throws SQLException {
     	// Split content page
     	HtmlParseData htmlParseData = (HtmlParseData) crawlerPage.getParseData();
@@ -171,6 +203,10 @@ public class MyCrawler extends WebCrawler {
     	}
 	}
     
+    /**
+     * Permet de récupérer la date du jour au format yyyy-MM-dd'T'HH:mmZ
+     * @return date
+     */
     public String getDate() {
     	TimeZone tz = TimeZone.getTimeZone("UTC");
     	DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ");
@@ -194,4 +230,45 @@ public class MyCrawler extends WebCrawler {
     	}
     	return description;
     }
+    
+    /**
+     * Permet d'ajouter la page à la liste
+     * @param page
+     */
+    public void addPage(Page page) {
+    	if (todoListPage == null) {
+    		todoListPage = new ArrayList<Page>();
+    	}
+    	todoListPage.add(page);
+    }
+    
+    /**
+     * Permet de récupérer la prochaine page à insérer en bdd.
+     * @return
+     */
+    private Page getPage() {
+    	Page page = null;
+    	if (todoListPage != null && todoListPage.size() > 0) {
+    		page = todoListPage.remove(0);
+    		if (completeListPage == null) {
+    			completeListPage = new ArrayList<Page>();
+    		}
+    		completeListPage.add(page);
+    	}
+    	return page;
+    }
+
+	/**
+	 * @return the start
+	 */
+	public boolean isStart() {
+		return start;
+	}
+
+	/**
+	 * @param start the start to set
+	 */
+	public void setStart(boolean start) {
+		this.start = start;
+	}
 }
