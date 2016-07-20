@@ -26,6 +26,11 @@ public class DBConnector {
 	 * @throws ClassNotFoundException 
 	 */
 	public static Connection getInstance() {
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
 		try {
 			if(_instance == null || _instance.isClosed()){
