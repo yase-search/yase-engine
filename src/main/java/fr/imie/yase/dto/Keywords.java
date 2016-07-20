@@ -12,7 +12,11 @@ public class Keywords {
 	private Integer id;
 	
 	private String value;
-	
+
+	public Keywords(){
+
+	}
+
 	public Keywords(String value, boolean pertinent, Integer id) {
 		this.value = value;
 		this.pertinent = pertinent;
