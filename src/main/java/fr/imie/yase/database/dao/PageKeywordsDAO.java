@@ -20,8 +20,12 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
     private static final String SELECT_TABLE = "SELECT * FROM pages_words where idpage = ? AND idword = ?;";
     private static final String SELECT_ALL_WORDS_FROM_PAGE =
             "SELECT w.id, w.text FROM pages_words pw INNER JOIN words w ON w.id = pw.idword WHERE pw.idpage = ?";
+
     private static final String INSERT_TABLE = "INSERT INTO pages_words (idpage,idword,strength) VALUES (?,?,?);";
+    private static final String INSERT_MASS_TABLE = "INSERT INTO pages_words (idpage, idword, strength) VALUES ";
+
     private static final String DELETE_TABLE = "";
+    private static final String DELETE_MASS_TABLE = "DELETE FROM pages_words WHERE idPage = ? and idWord in ";
 
     private static final String ATT_IDPAGE = "idpage";
     private static final String ATT_IDKEYWORD = "idword";
@@ -58,7 +62,7 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
     }
 
     public PageKeywords create(PageKeywords entity) throws SQLException {
-        Connection  connection = DBConnector.getInstance();
+        Connection connection = DBConnector.getInstance();
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TABLE, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setInt(1, entity.getIdPage());
         preparedStatement.setInt(2, entity.getIdKeyword());
@@ -70,6 +74,7 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
 
     /**
      * Permet de préparer l'objet preparedStatement pour une requête find
+     *
      * @param pageKeywords PageKeywords
      * @return PreparedStatement PreparedStatement
      * @throws SQLException SQLException
@@ -82,7 +87,7 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
         return preparedStatement;
     }
 
-    public List<Keywords> findAllKeywordsFromPage(Page page) throws SQLException{
+    public List<Keywords> findAllKeywordsFromPage(Page page) throws SQLException {
         Connection connection = DBConnector.getInstance();
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_WORDS_FROM_PAGE);
         preparedStatement.setInt(1, page.getId());
@@ -90,8 +95,8 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
 
         List<Keywords> keywords = new ArrayList<Keywords>();
 
-        if(!result.wasNull()){
-            while(result.next()){
+        if (!result.wasNull()) {
+            while (result.next()) {
                 Keywords keyword = new Keywords();
                 keyword.setValue(result.getString("text"));
                 keyword.setId(result.getInt("id"));
@@ -100,5 +105,32 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
         }
 
         return keywords;
+    }
+
+    public void insertAllKeywords(List<PageKeywords> pageKeywords) throws SQLException{
+        String values = "";
+
+        for(PageKeywords p: pageKeywords){
+            values += "(" + p.getIdPage() + "," + p.getIdKeyword()+ "," + p.getStrengh() + "),";
+        }
+
+        String SQL = INSERT_MASS_TABLE + values.substring(0, values.length() - 1) + ";";
+        Connection connection = DBConnector.getInstance();
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+        preparedStatement.execute();
+    }
+
+    public void deleteAllKeywords(List<PageKeywords> pageKeywords) throws SQLException{
+        String values = "(";
+
+        for(PageKeywords p: pageKeywords){
+            values += p.getIdKeyword() + ",";
+        }
+
+        String SQL = DELETE_MASS_TABLE + values.substring(0, values.length() - 1) + ");";
+        Connection connection = DBConnector.getInstance();
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+        preparedStatement.setInt(1, pageKeywords.get(0).getIdPage());
+        preparedStatement.execute();
     }
 }

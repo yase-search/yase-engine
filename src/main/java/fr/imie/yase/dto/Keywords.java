@@ -13,6 +13,8 @@ public class Keywords {
 	
 	private String value;
 
+	private Keywords keyword;
+
 	public Keywords(){
 
 	}
@@ -64,5 +66,4 @@ public class Keywords {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
 }

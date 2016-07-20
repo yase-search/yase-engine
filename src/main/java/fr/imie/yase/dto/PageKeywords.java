@@ -5,6 +5,7 @@ public class PageKeywords {
 	private int idPage;
 	private int idKeyword;
 	private Integer strengh;
+	private Keywords keyword;
 	
 	public PageKeywords(int page, int keyword, Integer strengh){
 		this.idPage = page;
@@ -37,5 +38,13 @@ public class PageKeywords {
 	}
 	public void setStrengh(Integer strengh) {
 		this.strengh = strengh;
+	}
+
+	public Keywords getKeyword(){
+		return this.keyword;
+	}
+
+	public void setKeyword(Keywords keyword){
+		this.keyword = keyword;
 	}
 }

@@ -1,41 +1,16 @@
 package fr.imie.yase.crawler;
 
-
-
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
 import java.util.regex.Pattern;
-
-import org.apache.commons.codec.binary.StringUtils;
-import org.apache.poi.util.StringUtil;
-
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
-import fr.imie.yase.database.dao.DAO;
-import fr.imie.yase.database.dao.KeywordsDAO;
-import fr.imie.yase.database.dao.PageDAO;
-import fr.imie.yase.database.dao.PageKeywordsDAO;
-import fr.imie.yase.database.dao.WebSiteDAO;
-import fr.imie.yase.dto.Keywords;
-import fr.imie.yase.dto.PageKeywords;
-import fr.imie.yase.dto.WebSite;
 
-public class MyCrawler extends WebCrawler {
+public class PageCrawler extends WebCrawler {
 
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
                                                            + "|png|mp3|mp3|zip|gz))$");
     
-    
-
     /**
      * This method receives two parameters. The first parameter is the page
      * in which we have discovered this new url and the second parameter is
@@ -60,14 +35,11 @@ public class MyCrawler extends WebCrawler {
      @Override
      public void visit(Page crawlerPage) {
          String url = crawlerPage.getWebURL().getURL();
-         System.out.println("URL: " + url);
          if (crawlerPage.getParseData() instanceof HtmlParseData) {
-        	 ThreadCrawler threadCrawler = InstanceThreadCrawler.getInstance();
-        	 threadCrawler.addPage(crawlerPage);
-        	 if (!threadCrawler.isStart()) {
-        		 System.out.println("Lancement du thread");
-        		 threadCrawler.start();
-        	 }
+        	 ThreadCrawler threadCrawler = new ThreadCrawler();
+        	 threadCrawler.setPage(crawlerPage);
+             System.out.println("Lancement du thread pour " + url);
+             threadCrawler.start();
          }
     }
 }

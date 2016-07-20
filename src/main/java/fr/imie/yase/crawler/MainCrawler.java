@@ -6,10 +6,10 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
-public class Crawler {
+public class MainCrawler {
 	
-	public Crawler() throws Exception{
-		String crawlStorageFolder = System.getProperty("os.name").toLowerCase().indexOf("windows") > -1 ?
+	public MainCrawler() throws Exception{
+		String crawlStorageFolder = System.getProperty("os.name").toLowerCase().contains("windows") ?
 			"/Users/" + System.getProperty("user.name") + "/AppData/Roaming/crawler/tmp/root" :
 			"/tmp/crawler/root";
 
@@ -32,23 +32,13 @@ public class Crawler {
 	     * which are found in these pages
 	     */
 
-		/*
-		controller.addSeed("http://www.ebay.fr");
-		controller.addSeed("http://www.materiel.net");
-		controller.addSeed("http://www.wikipedia.fr");
-		controller.addSeed("http://www.lequipe.fr");
-		controller.addSeed("http://www.google.fr");
-		 */
-	    controller.addSeed("http://stackoverflow.com/");
-//	    controller.addSeed("https://openclassrooms.com/");
-//	    controller.addSeed("https://twitter.com/");
-//	    controller.addSeed("https://www.e-monsite.com/");
+	    //controller.addSeed("http://stackoverflow.com/");
+		controller.addSeed("http://127.0.0.1:8080/test.html");
 
 	    /*
 	     * Start the crawl. This is a blocking operation, meaning that your code
 	     * will reach the line after this only when crawling is finished.
 	     */
-	    controller.start(MyCrawler.class, numberOfCrawlers);
+	    controller.start(PageCrawler.class, numberOfCrawlers);
 	}
-	
 }
