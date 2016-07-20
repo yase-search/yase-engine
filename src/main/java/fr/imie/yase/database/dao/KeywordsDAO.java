@@ -99,7 +99,7 @@ public class KeywordsDAO implements DAO<Keywords> {
     public PreparedStatement preparedStatementOneWords(String keywords) throws SQLException {
         Connection connection = DBConnector.getInstance();
         PreparedStatement preparedStatement = connection.prepareStatement(SELECT_TABLE);
-        preparedStatement.setString(1, (String) keywords);
+        preparedStatement.setString(1, keywords);
         return preparedStatement;
     }
 
