@@ -18,6 +18,8 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
 	
 	// La technique à Erwan pour qu'il soit content et qu'il sourit à ses collègues et à la vie en général
 	private static final String SELECT_TABLE = "SELECT * FROM pages_words where idpage = ? AND idword = ?;";
+	private static final String SELECT_ALL_WORDS_FROM_PAGE =
+			"SELECT w.id, w.text FROM pages_words pw INNER JOIN words w ON w.id = pw.idword WHERE pw.idpage = ?";
 	private static final String INSERT_TABLE = "INSERT INTO pages_words (idpage,idword,strength) VALUES (?,?,?);";
 	private static final String DELETE_TABLE = "";
 
@@ -79,5 +81,24 @@ public class PageKeywordsDAO implements DAO<PageKeywords> {
 		preparedStatement.setInt(2, (int) pageKeywords.getIdKeyword());
 		return preparedStatement;
 	}
-	
+
+	public List<Keywords> findAllKeywordsFromPage(Page page) throws SQLException{
+		Connection connection = DBConnector.getInstance();
+		PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_WORDS_FROM_PAGE);
+		preparedStatement.setInt(1, page.getId());
+		ResultSet result = preparedStatement.executeQuery();
+
+		List<Keywords> keywords = new ArrayList<Keywords>();
+
+		if(!result.wasNull()){
+			while(result.next()){
+				Keywords keyword = new Keywords();
+                keyword.setValue(result.getString("text"));
+				keyword.setId(result.getInt("id"));
+				keywords.add(keyword);
+			}
+		}
+
+		return keywords;
+	}
 }
