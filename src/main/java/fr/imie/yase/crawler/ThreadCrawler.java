@@ -29,11 +29,22 @@ import org.jsoup.select.Elements;
  */
 public class ThreadCrawler extends Thread {
 
-	private static final int VERYHIGH = 10;
-	private static final int HIGH = 7;
-	private static final int MEDIUM = 5;
-	private static final int LOW = 3;
-	private static final int VERYLOW = 0;
+    private enum Pertinence{
+        VERYHIGH(10),
+        HIGH(7),
+        MEDIUM(5),
+        LOW(3),
+        VERYLOW(0);
+
+        int value;
+        Pertinence(int value) {
+            this.value = value;
+        }
+    }
+
+    private final static Vector<String> commonWords = new Vector<>(Arrays.asList("coucou",
+            "salut",
+            "hello"));
 
 	private final static String REGEX_SPECIAL_CHAR = "[^À-Ÿà-ÿ\\w-]";
 
@@ -63,7 +74,6 @@ public class ThreadCrawler extends Thread {
 	/**
 	 * Permet de lancer le crawl de la page passé en paramètre
 	 *
-	 * @param crawlerPage Page
 	 * @throws InterruptedException
 	 * @throws IOException          Erreur lors de la récupération de la page par le parser html
 	 */
@@ -181,7 +191,7 @@ public class ThreadCrawler extends Thread {
 				 * Pour chaque node, traitement du texte comme précédemment et ajout d'une valeur de pertinence
 				 */
 				if (!node.text().isEmpty()) {
-					int note = VERYHIGH;
+					int note = Pertinence.VERYHIGH.value;
 					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
 					updateWordsMap(tabWords, node.text(), note);
 				}
@@ -195,7 +205,7 @@ public class ThreadCrawler extends Thread {
 				 * Pour chaque node, traitement du texte comme précédemment et ajout d'une valeur de pertinence
 				 */
 				if (!node.text().isEmpty()) {
-					int note = HIGH;
+					int note = Pertinence.HIGH.value;
 					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
 					updateWordsMap(tabWords, node.text(), note);
 				}
@@ -213,7 +223,7 @@ public class ThreadCrawler extends Thread {
 				 * Pour chaque node, traitement du texte comme précédemment et ajout d'une valeur de pertinence
 				 */
 				if (!node.text().isEmpty()) {
-					int note = HIGH;
+					int note = Pertinence.HIGH.value;
 					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
 					updateWordsMap(tabWords, node.text(), note);
 				}
@@ -230,22 +240,22 @@ public class ThreadCrawler extends Thread {
 				 */
 				if (!node.text().isEmpty() || node.tagName() == "img") {
 					String word = node.text();
-					int note = VERYLOW;
+					int note = Pertinence.VERYLOW.value;
 					switch (node.tagName()) {
 						case "h1":
-							note = HIGH;
+							note = Pertinence.HIGH.value;
 							break;
 						case "h2":
-							note = MEDIUM;
+							note = Pertinence.MEDIUM.value;
 							break;
 						case "li":
-							note = LOW;
+							note = Pertinence.LOW.value;
 							break;
 						case "a":
-							note = LOW;
+							note = Pertinence.LOW.value;
 							break;
 						case "img":
-							note = MEDIUM;
+							note = Pertinence.MEDIUM.value;
 							word = node.attr("alt") != "" ? node.attr("alt") : FilenameUtils.getBaseName((new File((new URL(node.attr("src"))).toURI())).getPath());
 						default:
 							break;
