@@ -8,14 +8,18 @@ import fr.imie.yase.crawler.MainCrawler;
  * @author Erwan - Ludovic - Arnaud
  *
  */
-public class Application {
+public class Application extends Thread{
 	
-	public static void main(String[] args) throws Exception {
-		
-		System.out.println("Start application YASE.");
+	public void run(){
+
 
 		// Instanciate before crawler starts
         new CrawlerDBManager();
-		new MainCrawler();
+        try {
+            System.out.println("Start application YASE in thread.");
+            new MainCrawler();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
 	}
 }
