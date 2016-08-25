@@ -183,8 +183,8 @@ public class ThreadCrawler extends Thread {
 				 */
 				if (!node.text().isEmpty()) {
 					int note = Pertinence.VERYLOW.value;
+					String word = node.text();
 					if(pertinence == -1) {
-						String word = node.text();
 						switch (node.tagName()) {
 							case "h1":
 								note = Pertinence.HIGH.value;
@@ -210,8 +210,8 @@ public class ThreadCrawler extends Thread {
 					} else {
 						note = pertinence;
 					}
-					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
-					updateWordsMap(tabWords, node.text(), note);
+					System.out.println(String.format("Word: %s, Tag: %s, value: %d", word, node.tagName(), note));
+					updateWordsMap(tabWords, word, note);
 				}
 			}
 		}
@@ -256,7 +256,7 @@ public class ThreadCrawler extends Thread {
 		parseElements(mainElements, -1, tabWords);
 
 		// Elements du corps
-		// TODO: faire la même chose pour les autres éléments (main/footer/article/section/img etc...)
+		// TODO: faire la même chose pour les autres éléments (footer/article/section/img etc...)
 		// + changer dans certains node enfants la note suivant le tag parent(h1>h2>...>p etc.)
 		// ex: Elements node = doc.select("div[id^sidebar], div[class^sidebar], aside, section[id^=sidebar], section[class^=sidebar]");
 
