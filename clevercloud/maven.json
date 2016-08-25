@@ -4,6 +4,6 @@
     },
     "build": {
         "type": "maven",
-        "goal": "build"
+        "goal": "install"
     }
 }
