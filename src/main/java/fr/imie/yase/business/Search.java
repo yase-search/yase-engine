@@ -31,12 +31,12 @@ public class Search {
 	 * @throws SQLException
 	 */
 	public Search(String input) throws SQLException {
-		this.input = input;
+		this.setInput(input);
 		// Pour couper la chaine d'entrée avec les espaces ou les '
 		// TODO: trouver un moyen de sortir le critère de délimitation (en
 		// attribut de classe ou plus globalement)
 		String delimiter = "[ ']";
-		String[] splittedInput = input.split(delimiter);
+		String[] splittedInput = this.getInput().split(delimiter);
 
 		// On créé une liste de mots clés
 		ArrayList<String> keywords = new ArrayList<String>();
@@ -91,7 +91,7 @@ public class Search {
 	 *            the input to set
 	 */
 	public void setInput(String input) {
-		this.input = input;
+		this.input = input.toLowerCase();
 	}
 
 	/**
