@@ -14,7 +14,7 @@ public class YaseServletContextListener implements ServletContextListener{
     //Run this before web application is started
     @Override
     public void contextInitialized(ServletContextEvent arg0) {
-        if (System.getenv("CRAWL_ACTIVE").equals("TRUE")) {
+        if (System.getenv("CRAWL_ACTIVE") == "TRUE") {
             System.out.println("Starting thread");
             Application app = new Application();
             new Thread(app).start();
