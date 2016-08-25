@@ -33,14 +33,19 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			System.out.println(request.getParameter("search"));
-			Search search = new Search(request.getParameter("search"));
-			request.setAttribute("search", search);
+			String search = request.getParameter("search");
+			if(search == null || search.length() == 0){
+				response.sendRedirect("/");
+			} else {
+				System.out.println(request.getParameter("search"));
+				Search searchResults = new Search(request.getParameter("search"));
+				request.setAttribute("search", searchResults);
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Search.jsp");
+				rd.forward(request, response);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Search.jsp");
-		rd.forward(request, response);
 	}
 
 	/**
