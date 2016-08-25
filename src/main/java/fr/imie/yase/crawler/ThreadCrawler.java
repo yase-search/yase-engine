@@ -168,6 +168,56 @@ public class ThreadCrawler extends Thread {
 	}
 
 	/**
+	 *
+	 * @param elements ensemble d'objets contenant les mots à analyser
+	 * @param pertinence la valeur de pertinence à affecter aux mots des éléments enfants.
+	 *                   Si -1, on affecte des valeurs prédéfinies suivant le tag de l'Element,
+	 *                   sinon on affectera toujours la valeur du paramètre
+	 * @param tabWords un tableau de mots à compléter
+	 */
+	private void parseElements(Elements elements, int pertinence, HashMap<String, Integer> tabWords) {
+		for (Element elem : elements) {
+			for (Element node : elem.children()) {
+				/**
+				 * Pour chaque node, traitement du texte comme précédemment et ajout d'une valeur de pertinence
+				 */
+				if (!node.text().isEmpty()) {
+					int note = Pertinence.VERYLOW.value;
+					if(pertinence == -1) {
+						String word = node.text();
+						switch (node.tagName()) {
+							case "h1":
+								note = Pertinence.HIGH.value;
+								break;
+							case "h2":
+								note = Pertinence.MEDIUM.value;
+								break;
+							case "li":
+								note = Pertinence.LOW.value;
+								break;
+							case "a":
+								note = Pertinence.LOW.value;
+								break;
+//							case "img":
+//								note = Pertinence.MEDIUM.value;
+//								word = node.attr("alt") != "" ? node.attr("alt") : FilenameUtils.getBaseName((new File((new URL(node.attr("src"))).toURI())).getPath());
+//								break;
+							default:
+								break;
+
+						}
+
+					} else {
+						note = pertinence;
+					}
+					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
+					updateWordsMap(tabWords, node.text(), note);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Permet d'insérer un mot en base ou simplement de le récupérer.
 	 *
 	 * @param page
@@ -185,88 +235,26 @@ public class ThreadCrawler extends Thread {
 		 */
 		// Elements de headers
 		Elements headerNodes = doc.select("header, div#header, div.header");
-		for (Element elem : headerNodes) {
-			for (Element node : elem.children()) {
-				/**
-				 * Pour chaque node, traitement du texte comme précédemment et ajout d'une valeur de pertinence
-				 */
-				if (!node.text().isEmpty()) {
-					int note = Pertinence.VERYHIGH.value;
-					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
-					updateWordsMap(tabWords, node.text(), note);
-				}
-			}
-		}
+		parseElements(headerNodes, Pertinence.VERYHIGH.value, tabWords);
+
 		// Liens de barre(s) de navigation
 		Elements navLinks = doc.select("div#nav li a,div.nav li a,nav li a");
-		for (Element elem : navLinks) {
-			for (Element node : elem.children()) {
-				/**
-				 * Pour chaque node, traitement du texte comme précédemment et ajout d'une valeur de pertinence
-				 */
-				if (!node.text().isEmpty()) {
-					int note = Pertinence.HIGH.value;
-					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
-					updateWordsMap(tabWords, node.text(), note);
-				}
-			}
-		}
+		parseElements(navLinks, Pertinence.HIGH.value, tabWords);
+
 		// Liens des sidebars
 		Elements sidebarLinks = doc.select("div[id^sidebar] li a, " +
 				"div[class^sidebar] li a," +
 				" aside li a," +
 				" section[id^=sidebar] li a," +
 				" section[class^=sidebar] li a");
-		for (Element elem : sidebarLinks) {
-			for (Element node : elem.children()) {
-				/**
-				 * Pour chaque node, traitement du texte comme précédemment et ajout d'une valeur de pertinence
-				 */
-				if (!node.text().isEmpty()) {
-					int note = Pertinence.HIGH.value;
-					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
-					updateWordsMap(tabWords, node.text(), note);
-				}
-			}
-		}
+		parseElements(sidebarLinks, Pertinence.HIGH.value, tabWords);
+
 		// Éléments du main
 		Elements mainElements = doc.select("main," +
 				"section#main, section.main," +
 				"div#main, div.main");
-		for (Element elem : mainElements) {
-			for (Element node : elem.children()) {
-				/**
-				 * Pour chaque node, traitement du texte comme précédemment et ajout d'une valeur de pertinence
-				 */
-				if (!node.text().isEmpty() || node.tagName() == "img") {
-					String word = node.text();
-					int note = Pertinence.VERYLOW.value;
-					switch (node.tagName()) {
-						case "h1":
-							note = Pertinence.HIGH.value;
-							break;
-						case "h2":
-							note = Pertinence.MEDIUM.value;
-							break;
-						case "li":
-							note = Pertinence.LOW.value;
-							break;
-						case "a":
-							note = Pertinence.LOW.value;
-							break;
-						case "img":
-							note = Pertinence.MEDIUM.value;
-							word = node.attr("alt") != "" ? node.attr("alt") : FilenameUtils.getBaseName((new File((new URL(node.attr("src"))).toURI())).getPath());
-						default:
-							break;
+		parseElements(mainElements, -1, tabWords);
 
-					}
-
-					System.out.println(String.format("Word: %s, Tag: %s, value: %d", node.text(), node.tagName(), note));
-					updateWordsMap(tabWords, node.text(), note);
-				}
-			}
-		}
 		// Elements du corps
 		// TODO: faire la même chose pour les autres éléments (main/footer/article/section/img etc...)
 		// + changer dans certains node enfants la note suivant le tag parent(h1>h2>...>p etc.)
