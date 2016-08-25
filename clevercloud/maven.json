@@ -1,0 +1,9 @@
+{
+    "deploy": {
+        "goal": "-Dtest.active=false -Dexec.mainClass='fr.imie.yase.servlet' assembly:jar-with-dependencies exec:java"
+    },
+    "build": {
+        "type": "maven",
+        "goal": "build"
+    }
+}
