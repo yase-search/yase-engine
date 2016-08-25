@@ -36,7 +36,7 @@ public class Search {
 		// TODO: trouver un moyen de sortir le critère de délimitation (en
 		// attribut de classe ou plus globalement)
 		String delimiter = "[ ']";
-		String[] splittedInput = this.getInput().split(delimiter);
+		String[] splittedInput = this.getInput().toLowerCase().split(delimiter);
 
 		// On créé une liste de mots clés
 		ArrayList<String> keywords = new ArrayList<String>();
@@ -91,7 +91,7 @@ public class Search {
 	 *            the input to set
 	 */
 	public void setInput(String input) {
-		this.input = input.toLowerCase();
+		this.input = input;
 	}
 
 	/**
