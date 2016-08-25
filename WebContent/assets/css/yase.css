@@ -161,7 +161,14 @@ input[name="search"] {
 
 .result .url {
 	font-size: 0.9em;
+}
+
+.count, .url {
 	color: #A0A0A0;
+}
+
+.count {
+	margin-bottom: 10px;
 }
 
 @media screen and (max-width: 800px) {
