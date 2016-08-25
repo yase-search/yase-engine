@@ -29,8 +29,10 @@
 		</form>
 		</div>
 	</div>
+	<div id="subheader">
+		<i class="fa fa-globe"></i> Sur le web <span class="count">(<c:out value="${fn:length(search.pages)}" /> résultat<c:out value="${fn:length(search.pages) > 1 ? 's' : null }" />)</span>
+	</div>
 	<div class="wrapper search-wrapper">
-		<p class="count"><c:out value="${fn:length(search.pages)}" /> résultat<c:out value="${fn:length(search.pages) != 0 ? 's' : null }" /></p>
 		<c:forEach var="page" items="${search.pages}">
 			<div class="result">
 				<a href="<c:out value="${page.url}" />" class="title" target="_blank"><c:out
