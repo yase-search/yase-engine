@@ -1,11 +1,11 @@
 {
     "deploy": {
         "container":"TOMCAT8",
-        "war": {
+        "war": [{
             "file":"target/yase-0.0.1.war",
             "context":"/",
             "checkme":"/"
-        }
+        }]
     },
     "build": {
         "type": "maven",
