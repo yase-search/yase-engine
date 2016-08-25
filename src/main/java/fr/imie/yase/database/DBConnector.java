@@ -34,12 +34,6 @@ public class DBConnector {
 
 		try {
 			if(_instance == null || _instance.isClosed()){
-//				System.out.println(System.getenv("PG_URL"));
-//				System.out.println(System.getenv("PG_USER"));
-//				System.out.println(System.getenv("PG_PASSWORD"));
-//				System.out.println(URL);
-//				System.out.println(LOGIN);
-//				System.out.println(PASSWORD);
 				_instance = DriverManager.getConnection(URL, LOGIN, PASSWORD);
 			}
 		} catch (SQLException e) {
