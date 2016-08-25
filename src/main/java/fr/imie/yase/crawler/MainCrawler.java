@@ -13,7 +13,9 @@ public class MainCrawler {
 			"/Users/" + System.getProperty("user.name") + "/AppData/Roaming/crawler/tmp/root" :
 			"/tmp/crawler/root";
 
-	    int numberOfCrawlers = 7;
+	    int numberOfCrawlers = 2;
+
+		System.out.println("Starting " + Integer.toString(numberOfCrawlers) + " crawlers");
 
 	    CrawlConfig config = new CrawlConfig();
 	    config.setCrawlStorageFolder(crawlStorageFolder);
