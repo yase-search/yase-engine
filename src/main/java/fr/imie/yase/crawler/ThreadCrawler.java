@@ -105,7 +105,18 @@ public class ThreadCrawler extends Thread {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e2) {
+			e2.printStackTrace();
 		}
+	}
+
+	private Element getFaviconElement(final Element... elements) {
+		for(final Element elem : elements) {
+			if(elem != null) {
+				return elem;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -115,10 +126,24 @@ public class ThreadCrawler extends Thread {
 	 * @param website
 	 * @throws SQLException
 	 */
-	public fr.imie.yase.dto.Page createPage(Page page, WebSite website) throws SQLException {
+	public fr.imie.yase.dto.Page createPage(Page page, WebSite website) throws SQLException, IOException {
 		// Get data page
 		HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
 		String html = htmlParseData.getHtml();
+
+		Document doc = Jsoup.connect(page.getWebURL().getURL()).get();
+
+		final Element faviconElement = getFaviconElement(new Element[]{doc.head().select("link[rel=icon]").first(),
+				doc.head().select("link[href~=.*\\.ico]").first()});
+
+
+		String faviconUrl = null;
+		if (faviconElement != null) {
+			faviconUrl = faviconElement.attr("href");
+		}
+
+		System.out.println("favicon: " + faviconUrl);
+
 		// Create entity page
 		fr.imie.yase.dto.Page entity = new fr.imie.yase.dto.Page();
 		entity.setTitle(htmlParseData.getTitle());
@@ -133,6 +158,7 @@ public class ThreadCrawler extends Thread {
 		entity.setSize(html.length());
 		entity.setUrl(page.getWebURL().getURL());
 		entity.setWebsite(website);
+		entity.setFaviconUrl(faviconUrl);
 
 		// Insert page
 		PageDAO daoPage = new PageDAO();

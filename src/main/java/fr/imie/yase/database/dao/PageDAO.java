@@ -18,8 +18,8 @@ public class PageDAO implements DAO<Page>{
 	
 	private static String INSERT_TABLE = String.join("",
 		"INSERT INTO pages",
-		"(id_website, url, content, title, description, crawl_date, size, load_time, locale)",
-		"values (?,?,?,?,?,NOW(),?,?,?)"
+		"(id_website, url, content, title, description, crawl_date, size, load_time, locale, favicon)",
+		"values (?,?,?,?,?,NOW(),?,?,?,?)"
 	);
 	private static final String ATT_ID = "id";
 
@@ -39,7 +39,7 @@ public class PageDAO implements DAO<Page>{
 		Connection con = DBConnector.getInstance();
 		
 		String req = String.join("",
-			"SELECT DISTINCT(p.id), p.description, p.title, p.url, p.content, ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
+			"SELECT DISTINCT(p.id), p.description, p.title, p.url, p.content, p.favicon ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
 			"INNER JOIN pages_words pw ON pw.idpage = p.id ",
 			"INNER JOIN words w ON w.id = pw.idword ",
 			"INNER JOIN websites ws ON ws.id = p.id_website ",
@@ -60,7 +60,8 @@ public class PageDAO implements DAO<Page>{
 			p.setContent(res.getString("content"));
 			p.setUrl(res.getString("url"));
 			p.setWebsite(new WebSite(res.getInt("idWebsite"), res.getString("domain"), res.getString("protocol")));
-			
+			p.setFaviconUrl(res.getString("favicon"));
+
 			ret.add(p);
 		}
 		
@@ -90,6 +91,7 @@ public class PageDAO implements DAO<Page>{
 		statement.setInt(6, entity.getSize());
 		statement.setInt(7, entity.getLoad_time());
 		statement.setString(8,  entity.getLocale());
+		statement.setString(9, entity.getFaviconUrl());
 		
 		statement.execute();
 		
@@ -131,7 +133,7 @@ public class PageDAO implements DAO<Page>{
 		}
 		
 		String req = String.join("",
-			"SELECT DISTINCT(p.id), p.description, p.title, p.url, p.content, ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
+			"SELECT DISTINCT(p.id), p.description, p.title, p.url, p.content, p.favicon ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
 			"INNER JOIN pages_words pw ON pw.idpage = p.id ",
 			"INNER JOIN words w ON w.id = pw.idword ",
 			"INNER JOIN websites ws ON ws.id = p.id_website ",
@@ -157,7 +159,8 @@ public class PageDAO implements DAO<Page>{
 			p.setContent(res.getString("content"));
 			p.setUrl(res.getString("url"));
 			p.setWebsite(new WebSite(res.getInt("idWebsite"), res.getString("domain"), res.getString("protocol")));
-			
+			p.setFaviconUrl(res.getString("favicon"));
+
 			ret.add(p);
 		}
 		

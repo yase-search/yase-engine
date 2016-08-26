@@ -149,7 +149,8 @@ CREATE TABLE pages (
     crawl_date timestamp with time zone NOT NULL,
     size integer NOT NULL,
     load_time integer NOT NULL,
-    locale character varying(5) NOT NULL
+    locale character varying(5) NOT NULL,
+    favicon character varying(1000)
 );
 
 

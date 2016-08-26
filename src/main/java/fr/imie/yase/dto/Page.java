@@ -19,6 +19,7 @@ public class Page {
 	private Integer load_time;
 	private String locale;
 	private WebSite website;
+	private String faviconUrl;
 
 	/**
 	 * @return the title
@@ -174,5 +175,12 @@ public class Page {
 	public void setWebsite(WebSite website) {
 		this.website = website;
 	}
-	
+
+	public String getFaviconUrl() {
+		return faviconUrl;
+	}
+
+	public void setFaviconUrl(String faviconUrl) {
+		this.faviconUrl = faviconUrl;
+	}
 }
