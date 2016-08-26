@@ -41,7 +41,7 @@
 					<c:out value="${page.url}" />
 				</p>
 				<p class="description">
-					${searchFormat.boldKeywords(fn:escapeXml(page.description), fn:escapeXml(search.input))}"
+					${searchFormat.boldKeywords(fn:escapeXml(page.description), fn:escapeXml(search.input))}
 				</p>
 			</div>
 		</c:forEach>
