@@ -42,7 +42,7 @@
 						${searchFormat.boldKeywords(fn:escapeXml(page.url), fn:escapeXml(search.input))}
 				</p>
 				<p class="description">
-					${searchFormat.boldKeywords(fn:escapeXml(page.description), fn:escapeXml(search.input))}
+						${searchFormat.boldKeywords(searchFormat.pertinentExtract(fn:escapeXml(page.description), page.content, fn:escapeXml(search.input)), fn:escapeXml(search.input))}
 				</p>
 			</div>
 		</c:forEach>
