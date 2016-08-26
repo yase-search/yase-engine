@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href='<c:url value="/assets/css/reset.css" />'>
 	<link rel="stylesheet" type="text/css" href='<c:url value="/assets/css/yase.css" />'>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="icon" href="/assets/img/yase.png" />
 </head>
 <body>
 	<div class="wrapper">
