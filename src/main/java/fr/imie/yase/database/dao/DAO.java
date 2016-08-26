@@ -12,7 +12,7 @@ public interface DAO<T> {
 	
 	public boolean delete(int id) throws SQLException;
 	
-	public T update(T entity);
+	public T update(T entity) throws SQLException;
 	
 	public T create(T entity) throws SQLException;
 }

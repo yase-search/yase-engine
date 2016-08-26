@@ -21,6 +21,13 @@ public class PageDAO implements DAO<Page>{
 		"(id_website, url, content, title, description, crawl_date, size, load_time, locale, favicon)",
 		"values (?,?,?,?,?,NOW(),?,?,?,?)"
 	);
+
+	private static String UPDATE_TABLE = String.join(" ",
+			"UPDATE pages",
+			"SET url=?, content=?, title=?, description=?, crawl_date=NOW(), size=?, load_time=?, locale=?, favicon=?",
+			"WHERE id = ?"
+	);
+
 	private static final String ATT_ID = "id";
 
 	public Page get(int id) {
@@ -73,9 +80,23 @@ public class PageDAO implements DAO<Page>{
 		return false;
 	}
 
-	public Page update(Page entity) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page update(Page entity) throws SQLException{
+		Connection con = DBConnector.getInstance();
+		PreparedStatement statement = con.prepareStatement(UPDATE_TABLE);
+
+		statement.setString(1, entity.getUrl());
+		statement.setString(2, entity.getContent());
+		statement.setString(3, entity.getTitle());
+		statement.setString(4, entity.getDescription());
+		statement.setInt(5, entity.getSize());
+		statement.setInt(6, entity.getLoad_time());
+		statement.setString(7, entity.getLocale());
+		statement.setString(8, entity.getFaviconUrl());
+		statement.setInt(9, entity.getId());
+
+		statement.execute();
+
+		return entity;
 	}
 
 	public Page create(Page entity) throws SQLException {

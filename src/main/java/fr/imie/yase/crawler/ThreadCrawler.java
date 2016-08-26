@@ -179,10 +179,12 @@ public class ThreadCrawler extends Thread {
 		PageDAO daoPage = new PageDAO();
 		// On vérifie si la page existe déjà en base
 		fr.imie.yase.dto.Page result = daoPage.findByURL(entity);
+
 		if (result.getId() == null) {
-			daoPage.create(entity);
+			return daoPage.create(entity);
+		} else{
+			return daoPage.update(entity);
 		}
-		return entity;
 	}
 
 	/**
