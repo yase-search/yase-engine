@@ -15,7 +15,7 @@
 	href='<c:url value="/assets/css/yase.css" />'>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="icon" href='<c:url value="/assets/img/yase.png"' />
+<link rel="icon" href='<c:url value="/assets/img/yase.png" />' />
 </head>
 <body>
 	<div id="header">

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>YASE2</title>
+	<title>YASE</title>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,500,300,700">
 	<link rel="stylesheet" type="text/css" href='<c:url value="/assets/css/reset.css" />'>
 	<link rel="stylesheet" type="text/css" href='<c:url value="/assets/css/yase.css" />'>
