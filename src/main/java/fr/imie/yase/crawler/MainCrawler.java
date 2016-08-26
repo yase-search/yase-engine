@@ -8,7 +8,7 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 public class MainCrawler {
 	
-	public MainCrawler() throws Exception{
+	public MainCrawler(String[] domains) throws Exception{
 		String crawlStorageFolder = System.getProperty("os.name").toLowerCase().contains("windows") ?
 			"/Users/" + System.getProperty("user.name") + "/AppData/Roaming/crawler/tmp/root" :
 			"/tmp/crawler/root";
@@ -34,8 +34,9 @@ public class MainCrawler {
 		 * which are found in these pages
 		 */
 
-		//controller.addSeed("http://stackoverflow.com/");
-		controller.addSeed("http://127.0.0.1:8080/test.html");
+		for(String domain: domains){
+			controller.addSeed(domain);
+		}
 
 		/*
 		 * Start the crawl. This is a blocking operation, meaning that your code
