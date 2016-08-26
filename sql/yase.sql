@@ -507,6 +507,12 @@ ALTER TABLE ONLY pages
 
 
 --
+-- Name pages_url_idx; Type: INDEX; Schema: public; Owren:-
+--
+
+CREATE INDEX pages_url_idx ON PAGES USING btree(url)
+
+--
 -- Name: fk_idwork; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
