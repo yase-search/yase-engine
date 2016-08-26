@@ -173,6 +173,7 @@ public class ThreadCrawler extends Thread {
 		entity.setUrl(page.getWebURL().getURL());
 		entity.setWebsite(website);
 		entity.setFaviconUrl(faviconUrl);
+		entity.setDocument(doc);
 
 		// Insert page
 		PageDAO daoPage = new PageDAO();
@@ -267,12 +268,10 @@ public class ThreadCrawler extends Thread {
 	private Map<String, PageKeywords> parseKeywords(fr.imie.yase.dto.Page page, Page crawlerPage) throws SQLException, IOException, URISyntaxException {
 		HashMap<String, Integer> tabWords = new HashMap<>();
 		/**
-		 * Parsing du html de la page depuis l'url
-		 */
-		Document doc = Jsoup.connect(page.getUrl()).get();
-		/**
 		 * Traitement des principaux tags html 4/5 confondus (suivant précos w3c)
 		 */
+
+		Document doc = page.getDocument();
 		// URL
 		Matcher m = Pattern.compile("(\\w+\\b(?<!http|https|www))").matcher(page.getUrl());
 		while (m.find()) {

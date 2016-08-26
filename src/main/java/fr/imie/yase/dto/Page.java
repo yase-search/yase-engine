@@ -1,5 +1,8 @@
 package fr.imie.yase.dto;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.util.List;
 
 /**
@@ -20,6 +23,7 @@ public class Page {
 	private String locale;
 	private WebSite website;
 	private String faviconUrl;
+	private Document document;
 
 	/**
 	 * @return the title
@@ -182,5 +186,13 @@ public class Page {
 
 	public void setFaviconUrl(String faviconUrl) {
 		this.faviconUrl = faviconUrl;
+	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 }
