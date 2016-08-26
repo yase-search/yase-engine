@@ -20,7 +20,7 @@
 	<div id="header">
 		<div class="wrapper">
 			<div class="logo">
-				<span>Y</span><span>A</span><span>S</span><span>E</span>
+				<a href="/" title="Home"><span>Y</span><span>A</span><span>S</span><span>E</span></a>
 			</div>
 			<form method="get" action="<c:url value="/yolo" />" class="search-input-wrapper" id="search-form">
 			<input type="text" name="search" placeholder="Search..." value="<c:out value="${search.input}" />">

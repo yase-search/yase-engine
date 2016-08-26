@@ -27,6 +27,11 @@ body {
 	margin-right: auto;
 }
 
+.logo a {
+	text-decoration: none!important;
+	color: inherit;
+}
+
 .sublogo {
 	max-width: 425px;
 	margin-left: auto;
