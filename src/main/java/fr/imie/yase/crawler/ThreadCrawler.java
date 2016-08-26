@@ -25,6 +25,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.safety.Cleaner;
+import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 /**
  * Cette classe permet d'insérer en base le contenu push par PageCrawler dans la liste listPage.
@@ -157,7 +159,12 @@ public class ThreadCrawler extends Thread {
 		if (htmlParseData.getTitle().length() > 100) {
 			entity.setTitle(htmlParseData.getTitle().substring(0, 97) + "...");
 		}
-		entity.setContent(html);
+
+		Document doc = Jsoup.parse(html);
+		doc = new Cleaner(Whitelist.none()).clean(doc);
+		String cleanHtml = doc.body().html();
+
+		entity.setContent(cleanHtml);
 		entity.setCrawl_date(getDate());
 		entity.setDescription(getDescription(htmlParseData));
 		entity.setLoad_time(1);
