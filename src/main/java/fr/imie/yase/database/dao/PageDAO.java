@@ -126,7 +126,7 @@ public class PageDAO implements DAO<Page>{
 	
 	public Page findByURL(Page page) throws SQLException {
 		Connection con = DBConnector.getInstance();
-		String sql = "SELECT * FROM pages WHERE url = ?";
+		String sql = "SELECT id FROM pages WHERE url = ?";
 		
 		PreparedStatement statement = con.prepareStatement(sql);
 		statement.setString(1,  page.getUrl());
