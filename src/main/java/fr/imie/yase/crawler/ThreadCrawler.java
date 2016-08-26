@@ -164,6 +164,8 @@ public class ThreadCrawler extends Thread {
 		doc = new Cleaner(Whitelist.none()).clean(doc);
 		String cleanHtml = doc.body().html();
 
+		cleanHtml = cleanHtml.replace("(\s+)", " ");
+
 		entity.setContent(cleanHtml);
 		entity.setCrawl_date(getDate());
 		entity.setDescription(getDescription(htmlParseData));
