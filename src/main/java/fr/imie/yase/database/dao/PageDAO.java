@@ -133,7 +133,7 @@ public class PageDAO implements DAO<Page>{
 		}
 		
 		String req = String.join("",
-			"SELECT DISTINCT(p.id), p.description, p.title, p.url, p.content, p.favicon ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
+			"SELECT DISTINCT(p.id), p.description, p.title, p.url, p.content, p.favicon, ws.id AS idWebsite, ws.domain, ws.protocol from pages p ",
 			"INNER JOIN pages_words pw ON pw.idpage = p.id ",
 			"INNER JOIN words w ON w.id = pw.idword ",
 			"INNER JOIN websites ws ON ws.id = p.id_website ",
