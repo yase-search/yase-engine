@@ -66,20 +66,13 @@ public class SearchFormat {
         String shortContent = StringUtils.abbreviate(content, 255);
 
         if (!StringUtils.abbreviate(content, 255).matches(regex)) {
-            System.out.println("No keyword in beginning of content");
 
             int index = content.indexOf(keywords.split(" ")[0]);
-            System.out.println(index);
             if (index > -1) {
                 int beginning = Math.max(index - 100, 0);
                 int ending = Math.min(index + 100, content.length());
 
-                System.out.println(beginning);
-                System.out.println(ending);
-
                 shortContent = "[...]" + StringUtils.abbreviate(content.substring(beginning, ending), 255);
-
-                System.out.println(shortContent);
             }
         }
 
