@@ -11,6 +11,7 @@ import java.util.*;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
+import fr.imie.yase.database.dao.KeywordsDAO;
 import fr.imie.yase.database.dao.PageDAO;
 import fr.imie.yase.database.dao.PageKeywordsDAO;
 import fr.imie.yase.database.dao.WebSiteDAO;
@@ -297,8 +298,8 @@ public class ThreadCrawler extends Thread {
 			Map.Entry entry = (Map.Entry) it.next();
 			String currentKeyword = (String) entry.getKey();
 			if (currentKeyword.length() > 0) {
-				CrawlerDBManager manager = CrawlerDBManager.getInstance();
-				Keywords keywordsEntity = manager.keywordExists(currentKeyword);
+				KeywordsDAO keywords = new KeywordsDAO();
+				Keywords keywordsEntity = keywords.keywordExists(currentKeyword);
                 PageKeywords pageKeywords = new PageKeywords(page.getId(), keywordsEntity.getId(), (Integer)entry.getValue());
 				pageKeywords.setKeyword(keywordsEntity);
 				ret.put(keywordsEntity.getValue(), pageKeywords);
