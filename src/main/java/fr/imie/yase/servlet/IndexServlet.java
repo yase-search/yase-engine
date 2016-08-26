@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.imie.yase.Application;
 import fr.imie.yase.business.Search;
+import fr.imie.yase.helpers.SearchFormat;
 
 /**
  * Servlet implementation class IndexServlet
@@ -40,6 +41,10 @@ public class IndexServlet extends HttpServlet {
 				System.out.println(request.getParameter("search"));
 				Search searchResults = new Search(request.getParameter("search"));
 				request.setAttribute("search", searchResults);
+
+				SearchFormat searchFormat = new SearchFormat();
+				request.setAttribute("searchFormat", searchFormat);
+
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Search.jsp");
 				rd.forward(request, response);
 			}

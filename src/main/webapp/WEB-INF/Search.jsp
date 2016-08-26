@@ -1,5 +1,6 @@
+<%@ page import="java.util.regex.Pattern" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -35,13 +36,12 @@
 	<div class="wrapper search-wrapper">
 		<c:forEach var="page" items="${search.pages}">
 			<div class="result">
-				<a href="<c:out value="${page.url}" />" class="title" target="_blank"><c:out
-						value="${page.title}" /></a>
+				<a href="<c:out value="${page.url}" />" class="title" target="_blank">${searchFormat.boldKeywords(fn:escapeXml(page.title), fn:escapeXml(search.input))}</a>
 				<p class="url">
 					<c:out value="${page.url}" />
 				</p>
 				<p class="description">
-					<c:out value="${page.description}" />
+					${searchFormat.boldKeywords(fn:escapeXml(page.description), fn:escapeXml(search.input))}"
 				</p>
 			</div>
 		</c:forEach>
