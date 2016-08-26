@@ -202,6 +202,11 @@ input[name="search"] {
 	margin-left: 20px;
 }
 
+.no-favicon {
+	color: #A0A0A0;
+	opacity: 0.5;
+}
+
 @media screen and (max-width: 800px) {
 	.search-wrapper, #subheader {
 		padding-left: 15px;

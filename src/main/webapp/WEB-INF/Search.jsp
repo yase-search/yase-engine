@@ -37,13 +37,30 @@
 	<div class="wrapper search-wrapper">
 		<c:forEach var="page" items="${search.pages}">
 			<div class="result">
-				<a href="<c:out value="${page.url}" />" class="title" target="_blank">${searchFormat.boldKeywords(fn:escapeXml(page.title), fn:escapeXml(search.input))}</a>
-				<p class="url">
-						${searchFormat.boldKeywords(fn:escapeXml(page.url), fn:escapeXml(search.input))}
-				</p>
-				<p class="description">
-						${searchFormat.boldKeywords(searchFormat.pertinentExtract(fn:escapeXml(page.description), page.content, fn:escapeXml(search.input)), fn:escapeXml(search.input))}
-				</p>
+				<div class="row">
+					<div class="col-xs-1" style="padding-right:0;">
+						<c:choose>
+							<c:when test="${page.faviconUrl != null}">
+								<img src="${page.faviconUrl}" style="max-width:100%;">
+							</c:when>
+							<c:otherwise>
+								<span class="fa-stack fa-lg no-favicon">
+								  <i class="fa fa-picture-o fa-stack-1x"></i>
+								  <i class="fa fa-ban fa-stack-2x"></i>
+								</span>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="col-xs-11">
+						<a href="<c:out value="${page.url}" />" class="title" target="_blank">${searchFormat.boldKeywords(fn:escapeXml(page.title), fn:escapeXml(search.input))}</a>
+						<p class="url">
+								${searchFormat.boldKeywords(fn:escapeXml(page.url), fn:escapeXml(search.input))}
+						</p>
+						<p class="description">
+								${searchFormat.boldKeywords(searchFormat.pertinentExtract(fn:escapeXml(page.description), page.content, fn:escapeXml(search.input)), fn:escapeXml(search.input))}
+						</p>
+					</div>
+				</div>
 			</div>
 		</c:forEach>
 	</div>
