@@ -176,7 +176,7 @@ input[name="search"] {
 	border-radius: 2px;
 }
 
-.result .title {
+.result .title, .url {
 	text-decoration: none!important;
 	white-space: nowrap;
 	width: 75%;
