@@ -34,6 +34,7 @@ import org.jsoup.select.Elements;
 public class ThreadCrawler extends Thread {
 
     private enum Pertinence{
+    	ULTIME(15),
         VERYHIGH(10),
         HIGH(7),
         MEDIUM(5),
@@ -121,8 +122,6 @@ public class ThreadCrawler extends Thread {
 		if(doc.head().select("link[rel~=((I|i)con)]").first() != null) {
 			String href = doc.head().select("link[rel~=((I|i)con)]").first().attr("href");
 
-			System.out.println(href);
-
 			Pattern url = Pattern.compile("^https?:/{2}");
 			Pattern absolute = Pattern.compile("^/");
 
@@ -151,7 +150,6 @@ public class ThreadCrawler extends Thread {
 		String html = htmlParseData.getHtml();
 
 		final String faviconUrl = getFaviconUrl(page, website);
-		System.out.println("favicon: " + faviconUrl);
 
 		// Create entity page
 		fr.imie.yase.dto.Page entity = new fr.imie.yase.dto.Page();
@@ -268,7 +266,19 @@ public class ThreadCrawler extends Thread {
 		/**
 		 * Traitement des principaux tags html 4/5 confondus (suivant précos w3c)
 		 */
-		// Elements de headers
+		// URL
+		Matcher m = Pattern.compile("(\\w+\\b(?<!http|https|www))").matcher(page.getUrl());
+		while (m.find()) {
+			updateWordsMap(tabWords, m.group(0), Pertinence.ULTIME.value);
+		    System.out.println("Found in URL: " + m.group(0));
+		}
+		// Titre
+		for(String word : doc.title().split(" "))
+		{
+		    updateWordsMap(tabWords, word, Pertinence.ULTIME.value);
+			System.out.println("Found in title: " + word);
+		}
+
 		Elements headerNodes = doc.select("header, div#header, div.header");
 		parseElements(headerNodes, Pertinence.VERYHIGH.value, tabWords);
 
