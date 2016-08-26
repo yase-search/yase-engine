@@ -16,7 +16,6 @@ public class MainCrawler {
 		int numberOfCrawlers = 2;
 
 		System.out.println("Starting " + Integer.toString(numberOfCrawlers) + " crawlers");
-
 		CrawlConfig config = new CrawlConfig();
 		config.setCrawlStorageFolder(crawlStorageFolder);
 

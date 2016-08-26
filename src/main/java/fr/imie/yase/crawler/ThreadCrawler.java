@@ -8,9 +8,12 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
+import edu.uci.ics.crawler4j.url.WebURL;
 import fr.imie.yase.database.dao.KeywordsDAO;
 import fr.imie.yase.database.dao.PageDAO;
 import fr.imie.yase.database.dao.PageKeywordsDAO;
@@ -111,10 +114,25 @@ public class ThreadCrawler extends Thread {
 		}
 	}
 
-	private Element getFaviconElement(final Element... elements) {
-		for(final Element elem : elements) {
-			if(elem != null) {
-				return elem;
+	private String getFaviconUrl(final Page page, WebSite website) throws IOException {
+
+		Document doc = Jsoup.connect(page.getWebURL().getURL()).get();
+
+		if(doc.head().select("link[rel~=((I|i)con)]").first() != null) {
+			String href = doc.head().select("link[rel~=((I|i)con)]").first().attr("href");
+
+			System.out.println(href);
+
+			Pattern url = Pattern.compile("^https?:/{2}");
+			Pattern absolute = Pattern.compile("^/");
+
+			if(url.matcher(href).find()) {
+				return href;
+			} else {
+				if(!absolute.matcher(href).find()) {
+					href = "/"+href;
+				}
+				return website.getProtocol()+"://"+website.getDomain()+href;
 			}
 		}
 		return null;
@@ -132,17 +150,7 @@ public class ThreadCrawler extends Thread {
 		HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
 		String html = htmlParseData.getHtml();
 
-		Document doc = Jsoup.connect(page.getWebURL().getURL()).get();
-
-		final Element faviconElement = getFaviconElement(new Element[]{doc.head().select("link[rel=icon]").first(),
-				doc.head().select("link[href~=.*\\.ico]").first()});
-
-
-		String faviconUrl = null;
-		if (faviconElement != null) {
-			faviconUrl = faviconElement.attr("href");
-		}
-
+		final String faviconUrl = getFaviconUrl(page, website);
 		System.out.println("favicon: " + faviconUrl);
 
 		// Create entity page
