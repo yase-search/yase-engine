@@ -49,10 +49,6 @@ public class ThreadCrawler extends Thread {
         }
     }
 
-    private final static Vector<String> commonWords = new Vector<>(Arrays.asList("coucou",
-            "salut",
-            "hello"));
-
 	private final static String REGEX_SPECIAL_CHAR = "[^À-Ÿà-ÿ\\w-]";
 
 	private Page page;
