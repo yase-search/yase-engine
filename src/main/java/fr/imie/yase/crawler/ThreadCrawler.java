@@ -162,9 +162,7 @@ public class ThreadCrawler extends Thread {
 
 		Document doc = Jsoup.parse(html);
 		doc = new Cleaner(Whitelist.none()).clean(doc);
-		String cleanHtml = doc.body().html();
-
-		cleanHtml = cleanHtml.replace("(\s+)", " ");
+		String cleanHtml = doc.body().text().replaceAll("(\\s+)", " ");
 
 		entity.setContent(cleanHtml);
 		entity.setCrawl_date(getDate());
