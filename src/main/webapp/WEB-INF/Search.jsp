@@ -38,7 +38,7 @@
 			<div class="result">
 				<a href="<c:out value="${page.url}" />" class="title" target="_blank">${searchFormat.boldKeywords(fn:escapeXml(page.title), fn:escapeXml(search.input))}</a>
 				<p class="url">
-					<c:out value="${page.url}" />
+						${searchFormat.boldKeywords(fn:escapeXml(page.url), fn:escapeXml(search.input))}
 				</p>
 				<p class="description">
 					${searchFormat.boldKeywords(fn:escapeXml(page.description), fn:escapeXml(search.input))}
