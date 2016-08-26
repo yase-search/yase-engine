@@ -270,13 +270,11 @@ public class ThreadCrawler extends Thread {
 		Matcher m = Pattern.compile("(\\w+\\b(?<!http|https|www))").matcher(page.getUrl());
 		while (m.find()) {
 			updateWordsMap(tabWords, m.group(0), Pertinence.ULTIME.value);
-		    System.out.println("Found in URL: " + m.group(0));
 		}
 		// Titre
 		for(String word : doc.title().split(" "))
 		{
 		    updateWordsMap(tabWords, word, Pertinence.ULTIME.value);
-			System.out.println("Found in title: " + word);
 		}
 
 		Elements headerNodes = doc.select("header, div#header, div.header");
