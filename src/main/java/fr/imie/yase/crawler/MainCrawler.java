@@ -13,34 +13,34 @@ public class MainCrawler {
 			"/Users/" + System.getProperty("user.name") + "/AppData/Roaming/crawler/tmp/root" :
 			"/tmp/crawler/root";
 
-	    int numberOfCrawlers = 2;
+		int numberOfCrawlers = 2;
 
 		System.out.println("Starting " + Integer.toString(numberOfCrawlers) + " crawlers");
 
-	    CrawlConfig config = new CrawlConfig();
-	    config.setCrawlStorageFolder(crawlStorageFolder);
+		CrawlConfig config = new CrawlConfig();
+		config.setCrawlStorageFolder(crawlStorageFolder);
 
-	    /*
-	     * Instantiate the controller for this crawl.
-	     */
-	    PageFetcher pageFetcher = new PageFetcher(config);
-	    RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
-	    RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-	    CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
+		/*
+		 * Instantiate the controller for this crawl.
+		 */
+		PageFetcher pageFetcher = new PageFetcher(config);
+		RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+		RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
+		CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
 
-	    /*
-	     * For each crawl, you need to add some seed urls. These are the first
-	     * URLs that are fetched and then the crawler starts following links
-	     * which are found in these pages
-	     */
+		/*
+		 * For each crawl, you need to add some seed urls. These are the first
+		 * URLs that are fetched and then the crawler starts following links
+		 * which are found in these pages
+		 */
 
-	    //controller.addSeed("http://stackoverflow.com/");
+		//controller.addSeed("http://stackoverflow.com/");
 		controller.addSeed("http://127.0.0.1:8080/test.html");
 
-	    /*
-	     * Start the crawl. This is a blocking operation, meaning that your code
-	     * will reach the line after this only when crawling is finished.
-	     */
-	    controller.start(PageCrawler.class, numberOfCrawlers);
+		/*
+		 * Start the crawl. This is a blocking operation, meaning that your code
+		 * will reach the line after this only when crawling is finished.
+		 */
+		controller.start(PageCrawler.class, numberOfCrawlers);
 	}
 }
