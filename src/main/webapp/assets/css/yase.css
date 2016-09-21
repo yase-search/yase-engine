@@ -17,14 +17,19 @@ body {
 	padding: 0 15px;
 }
 
-.logo {
-	margin-top: 100px;
-	font-size: 8em;
-	color: #d8d8d8;
-	text-align: center;
-	width: 300px;
-	margin-left: auto;
-	margin-right: auto;
+#header .logo,
+#header .title-back {
+	display: inline-block;
+    color: #fff;
+    font-size: 2em;
+    margin: 0;
+    width: auto;
+}
+
+#header .title-back {
+	margin-left: 15px;
+	border-left: 1px solid white;
+	padding-left: 15px;
 }
 
 .logo a {
@@ -205,6 +210,84 @@ input[name="search"] {
 .no-favicon {
 	color: #A0A0A0;
 	opacity: 0.5;
+}
+
+/** Website */
+
+.website {
+	border: 1px solid #bdbdbd;
+	border-radius: 2px;
+	padding: 15px;
+	margin-bottom: 8px;
+	cursor: pointer;
+	-webkit-transition: background-color 0.5s; /* Safari */
+    transition: background-color 0.5s;
+}
+
+.website:hover {
+	background-color: white;
+}
+
+.website div {
+	font-family: 'Roboto';
+	font-size: 16px;
+	color: #bdbdbd;
+	display: inline-block;
+}
+
+.website .nbrPage-website {
+	float: right;
+}
+
+.website .content-website {
+	display: none;
+    border-top: 1px solid #bdbdbd;
+}
+
+.website.open .content-website {
+	display: block;
+	margin-top: 15px;
+	padding-top: 15px;
+}
+
+.website .content-website div {
+	display: block;
+}
+
+.website .content-website .list-page-website {
+	margin-top: 15px;
+}
+
+.website .content-website .list-page-website .title-list-page-website {
+    margin-bottom: 6px;
+}
+
+.website .content-website .list-page-website ul {
+	padding-left: 20px
+}
+
+.website .content-website .list-page-website ul li i.tiny {
+    font-size: 12px;
+    margin-right: 8px;
+}
+
+.website .content-website .action-website {
+	margin-top: 15px;
+}
+
+.website .content-website .action-website button {
+	padding: 10px;
+    border: 1px solid #bdbdbd;
+    color: #bdbdbd;
+    background-color: transparent;
+    border-radius: 2px;
+    font-family: 'Roboto';
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.website .content-website .action-website button:hover {
+	background-color: white;
 }
 
 @media screen and (max-width: 800px) {
