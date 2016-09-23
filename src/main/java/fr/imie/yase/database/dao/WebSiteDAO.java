@@ -7,17 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import fr.imie.yase.database.DBConnector;
 import fr.imie.yase.dto.WebSite;
 
 public class WebSiteDAO implements DAO<WebSite> {
 	
-	private static final String ATT_TEXT = "domain";
-	private static final String ATT_ID = "id";
-	private static final String ATT_SITE_RANK = "site_rank";
-	private static final String ATT_PROTOCOL = "protocol";
+	protected static final String ATT_TEXT = "domain";
+	protected static final String ATT_ID = "id";
+	protected static final String ATT_SITE_RANK = "site_rank";
+	protected static final String ATT_PROTOCOL = "protocol";
 	
 	private static final String SELECT_TABLE = "SELECT * FROM websites where " + ATT_TEXT + " = ? ;";
 	private static final String INSERT_TABLE = "INSERT INTO websites (" + ATT_TEXT + ", " + ATT_SITE_RANK + ", "+ ATT_PROTOCOL+ ") VALUES (?, ?, ?::http_protocol);";
