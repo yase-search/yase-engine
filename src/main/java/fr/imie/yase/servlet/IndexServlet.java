@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.imie.yase.business.Search;
+import fr.imie.yase.helpers.FormatUtil;
 import fr.imie.yase.helpers.PagingHelper;
 import fr.imie.yase.helpers.SearchFormat;
 
@@ -36,7 +37,7 @@ public class IndexServlet extends HttpServlet {
 				System.out.println(request.getParameter("search"));
 				
 				// On récupére le paramètre de la pagination
-                if (parameterPaging != null) {
+                if (parameterPaging != null && FormatUtil.isInteger(parameterPaging)) {
                     numberPage = Integer.parseInt(parameterPaging);
                 }
 				
