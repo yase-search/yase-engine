@@ -12,6 +12,8 @@ import fr.imie.yase.dto.Keywords;
 import fr.imie.yase.dto.Page;
 
 public class Search {
+    
+    private static final Integer INTERVAL = 10;
 
 	private String input;
 
@@ -22,6 +24,10 @@ public class Search {
 	private PageDAO pageDAO = new PageDAO();
 
 	private KeywordsDAO keywordsDAO = new KeywordsDAO();
+	
+	private Integer numberPages;
+	
+	private String interval;
 
 	/**
 	 * Construct
@@ -30,7 +36,7 @@ public class Search {
 	 *            String
 	 * @throws SQLException
 	 */
-	public Search(String input) throws SQLException {
+	public Search(String input, Integer numberPage) throws SQLException {
 		this.setInput(input);
 		// Pour couper la chaine d'entrée avec les espaces ou les '
 		// TODO: trouver un moyen de sortir le critère de délimitation (en
@@ -50,18 +56,21 @@ public class Search {
 		// On récupère notre liste d'objets Keywords
 		this.keywords = keywordsDAO.findByListKeywords(keywords);
 
+		this.numberPages = pageDAO.findNumberPages(this.keywords);
+		
+		// On vérifie que le numéro de pagination demandé est valide.
+		Integer paging = numberPage;
+		if (numberPage < 1) {
+		    paging = 1;
+		} else if (numberPage > this.numberPages / INTERVAL) {
+		    paging = 1;
+		}
+		
 		// On récupère notre liste de Page
-		this.pages = pageDAO.findByListKeywords(this.keywords);
-	}
-
-	/**
-	 * Renvoie les résultats de la recherche au client.
-	 * 
-	 * @return String JSON
-	 */
-	private String renderView() {
-		// Instruction sur l'envoie du JSON.
-		return "";
+		this.pages = pageDAO.findByListKeywords(this.keywords, paging, INTERVAL);
+		Integer startPages = (paging * INTERVAL);
+		
+		this.interval = (startPages - 10) + " - " + startPages;
 	}
 
 	/**
@@ -108,5 +117,33 @@ public class Search {
 	public void setKeywords(List<Keywords> keywords) {
 		this.keywords = keywords;
 	}
+
+    /**
+     * @return the numberPages
+     */
+    public Integer getNumberPages() {
+        return numberPages;
+    }
+
+    /**
+     * @param numberPages the numberPages to set
+     */
+    public void setNumberPages(Integer numberPages) {
+        this.numberPages = numberPages;
+    }
+
+    /**
+     * @return the interval
+     */
+    public String getInterval() {
+        return interval;
+    }
+
+    /**
+     * @param interval the interval to set
+     */
+    public void setInterval(String interval) {
+        this.interval = interval;
+    }
 
 }

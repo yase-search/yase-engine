@@ -305,6 +305,41 @@ div.wrapper p.sous-title {
 	color: #9c9c9c;
 }
 
+/** Pagination */
+
+div#pagination {
+	margin-bottom: 10px;
+}
+
+div#pagination ul {
+	text-align: center;
+}
+
+div#pagination ul li {
+	display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #bdbdbd;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: white;
+    margin-right: 10px;
+    font-family: Roboto;
+    color: #676767;
+}
+
+div#pagination ul li:hover {
+	background-color: #e8e8e8;
+}
+
+div#pagination ul li.enable {
+	background-color : #adadad;
+}
+
+div#pagination ul a li {
+	text-decoration: none;
+	color: #676767;
+}
+
 @media screen and (max-width: 800px) {
 	.search-wrapper, #subheader {
 		padding-left: 15px;

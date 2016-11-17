@@ -31,7 +31,6 @@ public class PageDAO implements DAO<Page>{
 	private static final String ATT_ID = "id";
 
 	public Page get(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -76,7 +75,6 @@ public class PageDAO implements DAO<Page>{
 	}
 
 	public boolean delete(int id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -108,7 +106,6 @@ public class PageDAO implements DAO<Page>{
 		statement.setString(3, entity.getContent());
 		statement.setString(4, entity.getTitle());
 		statement.setString(5, entity.getDescription());
-//	TODO	statement.setString(6, entity.getCrawl_date());
 		statement.setInt(6, entity.getSize());
 		statement.setInt(7, entity.getLoad_time());
 		statement.setString(8,  entity.getLocale());
@@ -138,8 +135,9 @@ public class PageDAO implements DAO<Page>{
 		return page;
 	}
 	
-	public List<Page> findByListKeywords(List<Keywords> params) throws SQLException {
+	public List<Page> findByListKeywords(List<Keywords> params, Integer numberPage, Integer interval) throws SQLException {
 		List<Page> ret = new ArrayList<Page>();
+		Integer startResult = numberPage * interval;
 		
 		if(params.size() <= 0){
 			return ret;
@@ -160,7 +158,7 @@ public class PageDAO implements DAO<Page>{
 			"INNER JOIN websites ws ON ws.id = p.id_website ",
 			"WHERE w.text IN (",
 			preparedArgs.substring(0, preparedArgs.length() - 1),
-			");"
+			") LIMIT ? OFFSET ?;"
 		);
 				
 		PreparedStatement statement = con.prepareStatement(req);
@@ -168,6 +166,8 @@ public class PageDAO implements DAO<Page>{
 		for(int i = 0, j = params.size(); i < j; i++){
 			statement.setString(i + 1, params.get(i).getValue());
 		}
+		statement.setInt(params.size() + 1, interval);
+		statement.setInt(params.size() + 2, startResult);
 		
 		ResultSet res = statement.executeQuery();
 		
@@ -187,4 +187,45 @@ public class PageDAO implements DAO<Page>{
 		
 		return ret;
 	}
+
+	/**
+	 * Permet de récupérer le nombre de page correspondant au mots clefs en paramètre
+	 * @param params List<Keywords>
+	 * @return Integer - Nombre de pages
+	 */
+    public Integer findNumberPages(List<Keywords> params) {
+        Integer numberPages = 0;
+        try {
+            Connection con = DBConnector.getInstance();
+            String preparedArgs = "";
+
+            for(int i = 0, j = params.size(); i < j; i++){
+                preparedArgs += "?,";
+            }
+            
+            String req = String.join("",
+                "SELECT COUNT(*) from pages p ",
+                "INNER JOIN pages_words pw ON pw.idpage = p.id ",
+                "INNER JOIN words w ON w.id = pw.idword ",
+                "INNER JOIN websites ws ON ws.id = p.id_website ",
+                "WHERE w.text IN (",
+                preparedArgs.substring(0, preparedArgs.length() - 1),
+                ");"
+            );
+                    
+            PreparedStatement statement = con.prepareStatement(req);
+            
+            for(int i = 0, j = params.size(); i < j; i++){
+                statement.setString(i + 1, params.get(i).getValue());
+            }
+                    
+            ResultSet res = statement.executeQuery();
+            if (res.next()) {
+                numberPages = res.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return numberPages;
+    }
 }

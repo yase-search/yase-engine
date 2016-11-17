@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	<div id="subheader">
-		<i class="fa fa-globe"></i> Sur le web <span class="count">(<c:out value="${fn:length(search.pages)}" /> résultat<c:out value="${fn:length(search.pages) > 1 ? 's' : null }" />)</span>
+		<i class="fa fa-globe"></i> Sur le web <span class="count">(<c:out value="${search.numberPages}" /> résultat<c:out value="${search.numberPages > 1 ? 's' : null }" />) ${search.interval}</span>
 	</div>
 	<div class="wrapper search-wrapper">
 		<c:forEach var="page" items="${search.pages}">
@@ -63,6 +63,9 @@
 				</div>
 			</div>
 		</c:forEach>
+		<div id="pagination">
+			<ul>${paging}</ul>
+		</div>
 	</div>
 </body>
 </html>
