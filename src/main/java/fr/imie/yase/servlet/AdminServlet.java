@@ -3,7 +3,6 @@ package fr.imie.yase.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,8 +37,12 @@ public class AdminServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AdminWebSiteDAO websiteDAO = new AdminWebSiteDAO();
 		List<AdminWebSite> listWebsite = new ArrayList<AdminWebSite>();
+		Integer numberPages = 0;
 		try {
             listWebsite = websiteDAO.findAll();
+            for (AdminWebSite website : listWebsite) {
+                numberPages = website.getNumberPage() + numberPages;
+            }
             // On trie par ASC
             Collections.sort(listWebsite);
         } catch (SQLException e) {
@@ -47,6 +50,8 @@ public class AdminServlet extends HttpServlet {
             e.printStackTrace();
         }
 		request.setAttribute("websites", listWebsite);
+		request.setAttribute("numberPages", numberPages);
+		request.setAttribute("numberWebsite", listWebsite.size());
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Admin.jsp");
         rd.forward(request, response);
 	}

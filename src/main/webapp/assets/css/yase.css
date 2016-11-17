@@ -299,6 +299,12 @@ input[name="search"] {
 	background-color: white;
 }
 
+div.wrapper p.sous-title {
+	font-family: 'Roboto';
+	font-size: 18px;
+	color: #9c9c9c;
+}
+
 @media screen and (max-width: 800px) {
 	.search-wrapper, #subheader {
 		padding-left: 15px;
