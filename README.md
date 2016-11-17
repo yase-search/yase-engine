@@ -2,25 +2,30 @@
 
 Yet another search engine.
 
-## Documentation :
+## Documentation
 
-### Installation :
+### Installation
 
-Pour installer le projet :
+Project installation:
 * `git clone git@github.com:yase-search/yase-engine.git`
-* `npm install`
+* `nvm install`
 
-### Lancer le crawler :
+### Launch
 
-Pour pouvoir lancer le crawler, il faut définir les variables de sessions suivantes :
+For launch the project, you'll need to set several environment variables:
 
-* `PG_URL` Adresse du serveur postgres
-* `PG_USER` Utilisateur de la base de données
-* `PG_PASSWORD` Mot de passe de la base de données
-* `PG_DB` Nom de la base de données
-* `CRAWL_ACTIVE` (optionnel) TRUE / FALSE : Activer ou non le crawler. Défaut : FALSE
-* `CRAWL_DOMAINS` (optionnel) Liste de domaines à parcourir, séparés par des virgules. Exemple : `https://google.fr,https://fr.wikipedia.org`
+* `PG_URL` Postgres server address
+* `PG_USER` Database user
+* `PG_PASSWORD` Database password
+* `PG_DB` Database name
 
-### Utilisation :
+### Crawl
 
-On écris des mots dans la barre de recherche de la page d'accueil puis on appuis sur la touche "Entrée". Les résultats de notre recherche s'affiche suite à notre action.
+For launch the crawler, you'll need to set 2 environment variables:
+
+* `CRAWL_ACTIVE` (optional) TRUE / FALSE: Crawler activation. Default: FALSE
+* `CRAWL_DOMAINS` (optional) Domain list to browse, split by comma. Example: `http://google.com,http://fr.wikipedia.org`
+
+### Use
+
+Write some words in the search bar at the first page, then push "Enter" key. The results of your search will be displayed.
