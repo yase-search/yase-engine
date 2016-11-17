@@ -2,46 +2,13 @@
 
 Yet another search engine.
 
-## TODO List :
+## Lancer le projet
 
-- Base de données
-- Lister les informations necessaires grâce au digramme de classe.
-- Dispatcher les différentes fonctionnalités
+Pour pouvoir lancer le projet, il faut définir les variables de sessions suivantes :
 
-## Fonctionnalités :
-
-- API REST.
-	- http://www.vogella.com/tutorials/REST/article.html 
-
-## CONCEPTION :
-
-### Déjà fait : 
-
-- Conception 1J
-- Conception technique 1.5J
-- Mise en place de l'environnement de DEV 0.5J
-
-### RAF :
-
-#### Développement + test :
-	
-##### Etape 1 :
-		
-- Identifier les données nécessaires :
-	- Text
-	- Titre 
-	- Description ( si pas de meta : Descritpion non disponible ).
-	- Pattern POOL
-	- Pattern DAO / DTO
-			
-##### Etape 2 :
-	
-- Fonctionnalités Métiers ( crawler + search ).
-		
-##### Etape 3 :
-	
-- Interface ( HTML / Search )
-		
-##### Etape 4 :
-		
-- Test
+`PG_URL` Adresse du serveur postgres
+`PG_USER` Utilisateur de la base de données
+`PG_PASSWORD` Mot de passe de la base de données
+`PG_DB` Nom de la base de données
+`CRAWL_ACTIVE` (optionnel) TRUE / FALSE : Activer ou non le crawler. Défaut : FALSE
+`CRAWL_DOMAINS` (optionnel) Liste de domaines à parcourir, séparés par des virgules. Exemple : `https://google.fr,https://fr.wikipedia.org`
