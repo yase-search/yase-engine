@@ -27,6 +27,11 @@
 		</div>
 	</div>
 	<div class="wrapper search-wrapper">
+		<!-- Informations -->
+		<p class="sous-title">Nombre de site web : ${numberWebsite}</p>
+		<p class="sous-title">Nombre de page web : ${numberPages}</p>
+		<br/>
+		
 		<c:forEach var="website" items="${websites}">
 			<div class="website">
 				<div class="title-website">${website.domain}</div>
