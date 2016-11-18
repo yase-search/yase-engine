@@ -28,8 +28,9 @@ public class PagingHelper {
      */
     public String generatePagingHTML() {
         StringBuilder builder = new StringBuilder();
+        float numberResultFloat = numberResult;
         if (numberResult > INTERVAL) {
-            Integer numberPaging = numberResult / INTERVAL;
+            Integer numberPaging = (int) Math.ceil(numberResultFloat / INTERVAL);
             Integer startPaging = getStartPaging(numberPaging);
             Integer endPaging = getEndPaging(numberPaging, startPaging);
             // On génère le bouton "Précédent" si possible

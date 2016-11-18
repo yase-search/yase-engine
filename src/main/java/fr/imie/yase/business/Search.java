@@ -62,9 +62,11 @@ public class Search {
 		
 		// On vérifie que le numéro de pagination demandé est valide.
 		Integer paging = numberPage;
+		float numberResultFloat = this.numberPages;
+		Integer numberPaging = (int) Math.ceil(numberResultFloat / INTERVAL);
 		if (numberPage < 1) {
 		    paging = 1;
-		} else if (numberPage > this.numberPages / INTERVAL) {
+		} else if (numberPage > numberPaging) {
 		    paging = 1;
 		}
 		
