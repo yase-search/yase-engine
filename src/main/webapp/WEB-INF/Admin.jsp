@@ -30,6 +30,7 @@
 		<!-- Informations -->
 		<p class="sous-title">Nombre de sites web : ${numberWebsite}</p>
 		<p class="sous-title">Nombre de pages web : ${numberPages}</p>
+		<p class="sous-title">Nombre de mots : ${numberKeywords}</p>
 		<br/>
 		
 		<c:forEach var="website" items="${websites}">

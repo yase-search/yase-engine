@@ -25,7 +25,6 @@ public class KeywordsDAO implements DAO<Keywords> {
     private static Map<String, Integer> keywordsCache = new HashMap<>();
 
     public Keywords get(int id) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -47,7 +46,6 @@ public class KeywordsDAO implements DAO<Keywords> {
     }
 
     public Keywords update(Keywords entity) {
-        // TODO Auto-generated method stub
         return null;
     }
 
