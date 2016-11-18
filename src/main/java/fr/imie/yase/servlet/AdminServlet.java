@@ -39,7 +39,6 @@ public class AdminServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AdminWebSiteDAO websiteDAO = new AdminWebSiteDAO();
-		KeywordsDAO keywordsDAO = new KeywordsDAO();
 		Map<String, Integer> mapKeywords = new HashMap<String, Integer>();
 		List<AdminWebSite> listWebsite = new ArrayList<AdminWebSite>();
 		Integer numberPages = 0;
@@ -50,7 +49,7 @@ public class AdminServlet extends HttpServlet {
                 numberPages = website.getNumberPage() + numberPages;
             }
             // On trie par ASC
-            Collections.sort(listWebsite);
+            Collections.sort(listWebsite, Collections.reverseOrder());
         } catch (SQLException e) {
             e.printStackTrace();
         }

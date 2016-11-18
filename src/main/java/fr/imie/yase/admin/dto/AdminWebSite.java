@@ -19,7 +19,7 @@ public class AdminWebSite extends WebSite implements Comparable<AdminWebSite> {
 	}
 
     public int compareTo(AdminWebSite o) {
-        return this.getDomain().compareTo(o.getDomain());
+        return this.getNumberPage().compareTo(o.getNumberPage());
     }
 
     /**
