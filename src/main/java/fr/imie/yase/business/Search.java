@@ -14,6 +14,8 @@ import fr.imie.yase.dto.Page;
 public class Search {
     
     private static final Integer INTERVAL = 10;
+    
+    private static final Integer ZERO = 0;
 
 	private String input;
 
@@ -68,9 +70,25 @@ public class Search {
 		
 		// On récupère notre liste de Page
 		this.pages = pageDAO.findByListKeywords(this.keywords, paging, INTERVAL);
-		Integer startPages = (paging * INTERVAL);
 		
-		this.interval = (startPages - 10) + " - " + startPages;
+		// On génère l'intervalle des pages concernés
+		initInterval(paging);
+	}
+	
+	/**
+	 * Permet de génèrer l'intervalle des pages concernées par la pagination en cour
+	 * @param paging Integer
+	 */
+	private void initInterval(Integer paging) {
+        Integer startPages = (paging * INTERVAL);
+        this.interval = (startPages - INTERVAL + 1) + " - " + startPages;
+        if (startPages > this.numberPages) {
+            if (ZERO.equals(this.numberPages)) {
+                this.interval = "";
+            } else {
+                this.interval = (startPages - INTERVAL + 1) + " - " + this.numberPages;
+            }
+        }
 	}
 
 	/**

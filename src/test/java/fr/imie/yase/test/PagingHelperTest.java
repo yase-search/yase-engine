@@ -35,4 +35,10 @@ public class PagingHelperTest extends TestCase  {
         Assert.assertEquals((Integer) 12, (Integer) pagingHelper.getEndPaging(20, 8));
     }
     
+    public void testPagingEnd() {
+        PagingHelper pagingHelper = new PagingHelper(26, 260, null);
+        Assert.assertEquals((Integer) 22, (Integer) pagingHelper.getStartPaging(26));
+        Assert.assertEquals((Integer) 26, (Integer) pagingHelper.getEndPaging(26, 22));
+    }
+    
 }

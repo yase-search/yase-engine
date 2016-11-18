@@ -167,7 +167,7 @@ public class PageDAO implements DAO<Page>{
 			statement.setString(i + 1, params.get(i).getValue());
 		}
 		statement.setInt(params.size() + 1, interval);
-		statement.setInt(params.size() + 2, startResult);
+		statement.setInt(params.size() + 2, startResult - 1);
 		
 		ResultSet res = statement.executeQuery();
 		
@@ -198,13 +198,17 @@ public class PageDAO implements DAO<Page>{
         try {
             Connection con = DBConnector.getInstance();
             String preparedArgs = "";
+            
+            if(params.size() <= 0){
+                return numberPages;
+            }
 
             for(int i = 0, j = params.size(); i < j; i++){
                 preparedArgs += "?,";
             }
             
             String req = String.join("",
-                "SELECT COUNT(*) from pages p ",
+                "SELECT COUNT(DISTINCT p.id) from pages p ",
                 "INNER JOIN pages_words pw ON pw.idpage = p.id ",
                 "INNER JOIN words w ON w.id = pw.idword ",
                 "INNER JOIN websites ws ON ws.id = p.id_website ",

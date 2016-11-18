@@ -12,9 +12,6 @@ public class FormatUtil {
         try
         {
            Integer.parseInt(s);
-   
-           // s is a valid integer
-   
            isValidInteger = true;
         }
         catch (NumberFormatException ex)

@@ -7,6 +7,8 @@ public class PagingHelper {
     private static final Integer LENGTH_PAGING = 5; 
     
     private static final Integer UN = 1;
+    
+    private static final Integer ZERO = 0;
 
     private Integer currentPageNumber;
     
@@ -38,7 +40,7 @@ public class PagingHelper {
                 builder.append(generateIterationPaging(i));
             }
             // On génère le bouton "Suivant" si possible
-            if (!numberPaging.equals(endPaging)) {
+            if (!currentPageNumber.equals(endPaging)) {
                 builder.append("<a href='" + constructLinkPaging(currentPageNumber + 1) + "'><li>Suiv</li></a>");
             }
         }
@@ -57,8 +59,13 @@ public class PagingHelper {
             startPaging = currentPageNumber - 2;
             Integer diffCurrentAndMax = numberPaging - currentPageNumber;
             Integer newStartPaging = startPaging - diffCurrentAndMax;
+            
             // On s'assure qu'on arrive pas en fin de pagination. Si c'est le cas on recule le début de la pagination.
             if (diffCurrentAndMax < 2 && newStartPaging >= 1) {
+                // Si la différence entre la page courante et la page max, alors on recule le debut de la pagination
+                if (ZERO.equals(diffCurrentAndMax)) {
+                    newStartPaging = startPaging - 2;
+                }
                 startPaging = newStartPaging;
             }
         }
