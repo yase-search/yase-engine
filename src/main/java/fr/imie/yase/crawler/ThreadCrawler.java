@@ -2,6 +2,7 @@ package fr.imie.yase.crawler;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -131,8 +132,22 @@ public class ThreadCrawler extends Thread {
 				}
 				return website.getProtocol()+"://"+website.getDomain()+href;
 			}
+		} else {
+			String favicon = website.getProtocol()+"://"+website.getDomain()+"/favicon.ico";
+			System.out.println("Trying to guess the favicon url " + favicon);
+			URL u = new URL(favicon);
+			HttpURLConnection huc =  (HttpURLConnection)  u.openConnection();
+			huc.setRequestMethod("HEAD");
+			huc.setInstanceFollowRedirects(true);
+			huc.connect();
+			if(huc.getResponseCode() == HttpURLConnection.HTTP_OK){
+				System.out.println("Favicon found at " + favicon);
+				return favicon;
+			} else {
+				System.out.println("Couldn't find favicon for site " + website.getDomain());
+				return null;
+			}
 		}
-		return null;
 	}
 
 	/**
@@ -198,8 +213,8 @@ public class ThreadCrawler extends Thread {
 	 * @throws SQLException
 	 */
 	public WebSite createWebSite(Page page) throws SQLException {
-		String domain = page.getWebURL().getDomain();
 		String url = page.getWebURL().getURL();
+		String domain = url.split("/")[2];
 		String protocol = url.substring(0, url.indexOf("://"));
 		WebSite website = new WebSite(null, domain, protocol);
 		WebSiteDAO daoWebSite = new WebSiteDAO();
@@ -288,11 +303,11 @@ public class ThreadCrawler extends Thread {
 		    updateWordsMap(tabWords, word, Pertinence.ULTIME.value);
 		}
 
-		Elements headerNodes = doc.select("header, div#header, div.header");
+		Elements headerNodes = doc.select("header, div#header, div.header, h1");
 		parseElements(headerNodes, Pertinence.VERYHIGH.value, tabWords);
 
 		// Liens de barre(s) de navigation
-		Elements navLinks = doc.select("div#nav li a,div.nav li a,nav li a");
+		Elements navLinks = doc.select("div#nav li a,div.nav li a,nav li a, h2");
 		parseElements(navLinks, Pertinence.HIGH.value, tabWords);
 
 		// Liens des sidebars
@@ -313,6 +328,8 @@ public class ThreadCrawler extends Thread {
 		// TODO: faire la même chose pour les autres éléments (footer/article/section/img etc...)
 		// + changer dans certains node enfants la note suivant le tag parent(h1>h2>...>p etc.)
 		// ex: Elements node = doc.select("div[id^sidebar], div[class^sidebar], aside, section[id^=sidebar], section[class^=sidebar]");
+
+		updateWordsMap(tabWords, page.getContent(), 1);
 
 		/**
 		 * sur la map finalement obtenue, effectuer le traitement précédent (légèrement modifié car HashMap<> != String[]

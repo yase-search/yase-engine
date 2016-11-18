@@ -13,7 +13,8 @@ public class MainCrawler {
 			"/Users/" + System.getProperty("user.name") + "/AppData/Roaming/crawler/tmp/root" :
 			"/tmp/crawler/root";
 
-		int numberOfCrawlers = 2;
+		String crawlerThreads = System.getenv("CRAWL_THREADS");
+		int numberOfCrawlers = crawlerThreads == null ? 1 : Integer.parseInt(crawlerThreads);
 
 		System.out.println("Starting " + Integer.toString(numberOfCrawlers) + " crawlers");
 		CrawlConfig config = new CrawlConfig();
