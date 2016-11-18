@@ -288,11 +288,11 @@ public class ThreadCrawler extends Thread {
 		    updateWordsMap(tabWords, word, Pertinence.ULTIME.value);
 		}
 
-		Elements headerNodes = doc.select("header, div#header, div.header");
+		Elements headerNodes = doc.select("header, div#header, div.header, h1");
 		parseElements(headerNodes, Pertinence.VERYHIGH.value, tabWords);
 
 		// Liens de barre(s) de navigation
-		Elements navLinks = doc.select("div#nav li a,div.nav li a,nav li a");
+		Elements navLinks = doc.select("div#nav li a,div.nav li a,nav li a, h2");
 		parseElements(navLinks, Pertinence.HIGH.value, tabWords);
 
 		// Liens des sidebars
