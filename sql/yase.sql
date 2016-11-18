@@ -456,7 +456,8 @@ ALTER TABLE ONLY websites
 --
 
 ALTER TABLE ONLY words
-    ADD CONSTRAINT words_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT words_pkey PRIMARY KEY (id),
+    ADD CONSTRAINT unique_word UNIQUE (text);
 
 
 --
