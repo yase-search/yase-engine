@@ -26,7 +26,7 @@ To launch the crawler, you need to set 2 environment variables:
 
 * `CRAWL_ACTIVE` (optional) TRUE / FALSE: Crawler activation. Default: FALSE
 * `CRAWL_DOMAINS` (optional) Domain list to browse, split by comma. Example: `http://google.com,http://fr.wikipedia.org`
-* `CRAWL_THREADS` (optional) Number of crawler to start. Default to 1
+* `CRAWL_THREADS` (optional) Number of crawlers to start. Default to 1
 
 ### Use
 
