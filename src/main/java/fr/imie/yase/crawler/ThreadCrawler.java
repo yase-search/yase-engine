@@ -314,6 +314,8 @@ public class ThreadCrawler extends Thread {
 		// + changer dans certains node enfants la note suivant le tag parent(h1>h2>...>p etc.)
 		// ex: Elements node = doc.select("div[id^sidebar], div[class^sidebar], aside, section[id^=sidebar], section[class^=sidebar]");
 
+		updateWordsMap(tabWords, page.getContent(), 1);
+
 		/**
 		 * sur la map finalement obtenue, effectuer le traitement précédent (légèrement modifié car HashMap<> != String[]
 		 */
