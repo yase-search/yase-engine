@@ -151,10 +151,17 @@ public class ThreadCrawler extends Thread {
 
 		// Create entity page
 		fr.imie.yase.dto.Page entity = new fr.imie.yase.dto.Page();
-		entity.setTitle(htmlParseData.getTitle());
-		if (htmlParseData.getTitle().length() > 100) {
-			entity.setTitle(htmlParseData.getTitle().substring(0, 97) + "...");
+		String title = htmlParseData.getTitle();
+
+		if(title == null){
+			title = page.getWebURL().toString();
 		}
+
+		if(title.length() > 100){
+			title = title.substring(0, 99) + "…";
+		}
+
+		entity.setTitle(title);
 
 		Document doc = Jsoup.parse(html);
 		doc = new Cleaner(Whitelist.none()).clean(doc);
