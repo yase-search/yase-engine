@@ -82,7 +82,7 @@ public class PagingHelper {
     public Integer getEndPaging(Integer numberPaging, Integer startPaging) {
         Integer endPaging = numberPaging;
         // Si le compteur de la dernière pagination ne vaut pas la dernière page possible
-        if (!startPaging.equals(numberPaging - LENGTH_PAGING)) {
+        if (!startPaging.equals(numberPaging - LENGTH_PAGING + 1)) {
             if (numberPaging <= LENGTH_PAGING) {
                 endPaging = numberPaging;
             } else {
