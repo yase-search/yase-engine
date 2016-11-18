@@ -167,7 +167,7 @@ public class PageDAO implements DAO<Page>{
 			statement.setString(i + 1, params.get(i).getValue());
 		}
 		statement.setInt(params.size() + 1, interval);
-		statement.setInt(params.size() + 2, startResult - 1);
+		statement.setInt(params.size() + 2, startResult - interval);
 		
 		ResultSet res = statement.executeQuery();
 		
